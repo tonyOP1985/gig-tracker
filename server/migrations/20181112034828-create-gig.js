@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.STRING
+        type: Sequelize.DATEONLY
       },
       pay: {
         type: Sequelize.STRING

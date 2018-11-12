@@ -14,7 +14,7 @@ module.exports = {
     */
     return queryInterface.bulkInsert('Gigs', [
       {
-        date: '10/20/2018',
+        date: '10-20-2018',
         pay: '100',
         venue: 'Original Empire Pizza',
         band: 'Shannon Lee',
@@ -25,7 +25,7 @@ module.exports = {
         createdAt:  new Date()
       },
       {
-        date: '10/20/2018',
+        date: '10-20-2018',
         pay: '100',
         venue: 'Charlotte Marathon',
         band: 'Shannon Lee',
