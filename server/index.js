@@ -1,18 +1,19 @@
 const express = require('express');
-const morgan = require('morgan');
 const cors = require('cors');
 const logger = require('morgan');
 const db = require('./models');
 
-const app = express();
+const gigs = require('./routes/gigs');
 
-app.use(logger('tiny'));
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-app.use(morgan('tiny'));
+// app.use(logger('tiny'));
+
+app.use('/api/gigs', gigs);
 
 const port = process.env.PORT || 5000;
 
