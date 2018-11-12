@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-// app.use(logger('tiny'));
+app.use(logger('tiny'));
 
 app.use('/api/gigs', gigs);
 
