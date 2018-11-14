@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     total: DataTypes.STRING
   }, {});
   Expense.associate = function(models) {
-    Expense.hasMany(models.Item, { foreignKey: 'id' });
+    Expense.hasMany(models.Item, {
+      foreignKey: 'expense_id',
+      as: 'items'
+    });
   };
   return Expense;
 };

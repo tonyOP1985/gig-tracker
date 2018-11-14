@@ -4,6 +4,8 @@ const logger = require('morgan');
 const db = require('./models');
 
 const gigs = require('./routes/gigs');
+const expenses = require('./routes/expenses');
+const items = require('./routes/items');
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(cors());
 app.use(logger('tiny'));
 
 app.use('/api/gigs', gigs);
+app.use('/api/expenses', expenses);
+app.use('/api/items', items);
 
 const port = process.env.PORT || 5000;
 
