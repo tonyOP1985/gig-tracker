@@ -70,4 +70,30 @@ router.get('/:id', asyncMiddleWare(async(req, res) => {
   })
 );
 
+/**
+ * Update expense
+ */
+router.put('/:id', asyncMiddleWare(async(req, res) => {
+    const id = parseInt(req.params.id);
+
+    const expense = await Expense.findById(id, {
+      include: [{
+        model: Item,
+        as: 'items'
+      }]
+    });
+    if (!expense) return res.status(400).send({ error: 'No expense found' });
+
+    const updatedExpense = { ...req.body };
+
+    await expense.update(updatedExpense, {
+      include: [{
+        model: Item,
+        as: 'items'
+      }]
+    });
+    res.send(expense);
+  })
+);
+
 module.exports = router;
