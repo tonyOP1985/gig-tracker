@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   Expense.associate = function(models) {
     Expense.hasMany(models.Item, {
       foreignKey: 'expense_id',
-      as: 'items'
+      as: 'items',
+      onDelete: 'CASCADE'
     });
   };
   return Expense;
