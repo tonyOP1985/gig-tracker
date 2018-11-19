@@ -96,4 +96,25 @@ router.put('/:id', asyncMiddleWare(async(req, res) => {
   })
 );
 
+/**
+ * Delete expense with items
+ */
+router.delete('/:id', asyncMiddleWare(async(req, res) => {
+    const id = parseInt(req.params.id);
+
+    const expense = await Expense.findById(id);
+    if (!expense) return res.status(400).send({ error: 'No expense found' });
+    
+    await Expense.destroy({
+      where: { id }
+    });
+
+    await Item.destroy({
+      where: { expense_id: id }
+    });
+
+    res.send(expense);
+  })
+);
+
 module.exports = router;
