@@ -14,17 +14,33 @@ router.post('/', asyncMiddleWare(async(req, res) => {
 );
 
 /**
+ * Update item by id
+ */
+router.put('/:id', asyncMiddleWare(async(req, res) => {
+    const id = parseInt(req.params.id);
+
+    const item = await Item.findById(id);
+    if (!item) return res.status(400).send({ error: 'No item found' });
+
+    const updatedItem = { ...req.body };
+
+    await item.update(updatedItem);
+    res.send(item);
+  })
+);
+
+/**
  * Delete item by id
  */
 router.delete('/:id', asyncMiddleWare(async(req, res) => {
-  const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
 
-  const item = await Item.findById(id);
-  if (!item) return res.status(400).send({ error: 'No item found' });
+    const item = await Item.findById(id);
+    if (!item) return res.status(400).send({ error: 'No item found' });
 
-  await item.destroy();
-  res.send(item);
-})
+    await item.destroy();
+    res.send(item);
+  })
 );
 
 module.exports = router;
