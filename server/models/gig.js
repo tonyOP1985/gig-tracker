@@ -7,10 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     band: DataTypes.STRING,
     mileage: DataTypes.STRING,
     city: DataTypes.STRING,
-    state: DataTypes.STRING
+    state: DataTypes.STRING,
+    user_id: DataTypes.INTEGER
   }, {});
   Gig.associate = function(models) {
-    // associations can be defined here
+    Gig.hasMany(models.User);
   };
   return Gig;
 };

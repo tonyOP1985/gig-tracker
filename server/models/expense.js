@@ -1,8 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Expense = sequelize.define('Expense', {
-    date: DataTypes.STRING,
-    total: DataTypes.STRING
+    date: DataTypes.DATEONLY,
+    total: DataTypes.STRING,
+    user_id: DataTypes.INTEGER
   }, {});
   Expense.associate = function(models) {
     Expense.hasMany(models.Item, {

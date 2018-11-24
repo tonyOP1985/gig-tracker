@@ -109,10 +109,6 @@ router.delete('/:id', asyncMiddleWare(async(req, res) => {
       where: { id }
     });
 
-    await Item.destroy({
-      where: { expense_id: id }
-    });
-
     res.send(expense);
   })
 );
