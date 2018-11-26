@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Gig = sequelize.define('Gig', {
-    date: DataTypes.DATE,
+    date: DataTypes.DATEONLY,
     pay: DataTypes.STRING,
     venue: DataTypes.STRING,
     band: DataTypes.STRING,
