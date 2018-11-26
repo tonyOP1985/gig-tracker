@@ -9,7 +9,7 @@ router = express.Router();
  * Get all Expenses
  */
 router.get('/', asyncMiddleWare(async(req, res) => {
-    const expenes = await Expense.findAll({
+    const expenses = await Expense.findAll({
       order: [
         ['date', 'DESC']
       ],
@@ -20,7 +20,7 @@ router.get('/', asyncMiddleWare(async(req, res) => {
         }
       ]
     })
-    res.send({ expenes });
+    res.send({ expenses });
   })
 );
 

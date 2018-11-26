@@ -3,7 +3,7 @@
     <v-card-title>Expenses</v-card-title>
     <v-data-table
         :headers="headers"
-        :items="get_expenses.expenes"
+        :items="get_expenses.expenses"
         hide-actions>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.date }}</td>
@@ -29,14 +29,10 @@ export default {
         { text: 'Total', value: false },
         { text: 'Number of Items', value: false },
         { text: 'Actions', value: false, sortable: false }
-      ],
-      expenseData: {}
+      ]
     }
   },
   computed: {
-    expenses() {
-      return this.get_expenses.expenses;
-    },
     ...mapGetters('expenses', ['get_expenses'])
   }
 }
