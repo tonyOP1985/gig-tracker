@@ -30,9 +30,7 @@
     </v-toolbar>
 
     <v-content>
-      <v-flex sm12 md10 offset-md1>
-        <router-view/>
-      </v-flex>
+      <router-view/>
     </v-content>
   </v-app>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-5">
+  <v-card>
     <v-card-title primary-title>
       <div class="headline">Gigs</div>
       <v-spacer></v-spacer>

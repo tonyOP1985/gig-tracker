@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-5">
+  <v-card>
     <v-card-title primary-title>
       <div class="headline">Expenses</div>
       <v-spacer></v-spacer>
@@ -61,7 +61,7 @@ export default {
         { text: 'Date', value: 'date' },
         { text: 'Total', value: 'total' },
         { text: 'Number of Items', value: 'items' },
-        { text: 'Actions', value: false, sortable: false }
+        { text: 'Actions', value: 'id', sortable: false }
       ],
       itemHeaders: [
         { text: 'Item', value: 'item', sortable: false },
