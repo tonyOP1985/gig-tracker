@@ -1,6 +1,6 @@
 const express = require('express');
 const { Expense, Item } = require('../models');
-const { validateExpense, validateExpenseWithItems } = require('../validation/validation');
+const { validateExpense, validateExpenseWithItems } = require('../Validation/validation');
 const asyncMiddleWare = require('../middleware/async');
 
 router = express.Router();

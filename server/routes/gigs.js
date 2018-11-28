@@ -1,6 +1,6 @@
 const express = require('express');
 const { Gig } = require('../models');
-const { validateGig } = require('../validation/validation');
+const { validateGig } = require('../Validation/validation');
 const asyncMiddleWare = require('../middleware/async');
 
 const router = express.Router();
