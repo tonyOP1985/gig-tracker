@@ -3,14 +3,15 @@
     <v-card-title primary-title>
       <div class="headline">Gigs</div>
       <v-spacer></v-spacer>
-      <v-btn>
+      <v-btn color="primary">
         <v-icon class="mr-3">add</v-icon>
         Add Gig
       </v-btn>
     </v-card-title>
     <v-data-table
         :headers="headers"
-        :items="get_gigs.gigs">
+        :items="get_gigs.gigs"
+        disable-initial-sort>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.date }}</td>
         <td>${{ props.item.pay }}</td>
@@ -18,8 +19,16 @@
         <td>{{ props.item.band }}</td>
         <td>{{ props.item.city }}, {{ props.item.state }}</td>
         <td>{{ props.item.mileage }} miles</td>
-        <v-btn small color="primary">Edit</v-btn>
-        <v-btn small color="error">Delete</v-btn>
+        <td>
+          <v-icon
+              small
+              class="mr-2">
+            edit
+          </v-icon>
+          <v-icon small>
+            delete
+          </v-icon>
+        </td>
       </template>
     </v-data-table>
   </v-card>
@@ -29,23 +38,18 @@
 import store from '@/store/store.js';
 import { mapGetters } from 'vuex';
 
-import DataTable from '../components/DataTable';
-
 export default {
   name: 'gigs',
-  components: {
-    DataTable
-  },
   data() {
     return {
       headers: [
-        { text: 'Date', value: false },
-        { text: 'Pay', value: false },
-        { text: 'Venue', value: false },
-        { text: 'Band', value: false },
-        { text: 'Location', value: false },
-        { text: 'Milage', value: false },
-        { text: 'Actions', value: false, sortable: false}
+        { text: 'Date', value: 'date' },
+        { text: 'Pay', value: 'pay' },
+        { text: 'Venue', value: 'venue' },
+        { text: 'Band', value: 'band'},
+        { text: 'Location', value: 'city' },
+        { text: 'Mileage', value: 'mileage' },
+        { text: 'Actions', sortable: false}
       ]
     }
   },

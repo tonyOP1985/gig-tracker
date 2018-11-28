@@ -1,5 +1,6 @@
 const express = require('express');
 const { Gig } = require('../models');
+const { validateGig } = require('../Validation/validation');
 const asyncMiddleWare = require('../middleware/async');
 
 const router = express.Router();
@@ -21,6 +22,9 @@ router.get('/', asyncMiddleWare(async(req, res) => {
  * POST gig
  */
 router.post('/', asyncMiddleWare(async(req, res) => {
+    const { error } = validateGig(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
     const gig = await Gig.create(req.body);
     res.send(gig);
   })
@@ -31,6 +35,9 @@ router.post('/', asyncMiddleWare(async(req, res) => {
  */
 router.put('/:id', asyncMiddleWare(async(req, res) => {
     const id = parseInt(req.params.id);
+
+    const { error } = validateGig(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
     const gig = await Gig.findById(id);
     if (!gig) return res.status(400).send({ error: 'No gig found.'});

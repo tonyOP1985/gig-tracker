@@ -20,11 +20,11 @@
       <v-toolbar-title>Gig Tracker</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>
-          <router-link to="/gigs" class="white--text">Gigs</router-link>
+        <v-btn flat to="/gigs">
+          Gigs
         </v-btn>
-        <v-btn flat>
-          <router-link to="/expenses" class="white--text">Expenses</router-link>
+        <v-btn flat to="/expenses">
+          Expenses
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>

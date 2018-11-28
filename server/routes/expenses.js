@@ -1,5 +1,6 @@
 const express = require('express');
 const { Expense, Item } = require('../models');
+const { validateExpense, validateExpenseWithItems } = require('../Validation/validation');
 const asyncMiddleWare = require('../middleware/async');
 
 router = express.Router();
@@ -29,6 +30,9 @@ router.get('/', asyncMiddleWare(async(req, res) => {
  * Add Expense
  */
 router.post('/', asyncMiddleWare(async(req, res) => {
+    const { error } = validateExpense(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
     const expense = await Expense.create(req.body);
     res.send(expense);
   })
@@ -38,6 +42,9 @@ router.post('/', asyncMiddleWare(async(req, res) => {
  * Add Expense with Items
  */
 router.post('/items', asyncMiddleWare(async(req, res) => {
+    const { error } = validateExpenseWithItems(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
     const expense = await Expense.create(req.body, {
       include: [
         {
@@ -74,7 +81,10 @@ router.get('/:id', asyncMiddleWare(async(req, res) => {
  * Update expense
  */
 router.put('/:id', asyncMiddleWare(async(req, res) => {
-    const id = parseInt(req.params.id);
+    const { error } = validateExpenseWithItems(req.body);
+    if (error) return res.status(400).send(error.details[0].message);  
+  
+  const id = parseInt(req.params.id);
 
     const expense = await Expense.findById(id, {
       include: [{
