@@ -1,10 +1,9 @@
 const express = require('express');
 const { Expense, Item } = require('../models');
-const { validateExpense, validateExpenseWithItems } = require('../Validation/validation');
+const { validateExpense, validateExpenseWithItems } = require('../validation/validation');
 const asyncMiddleWare = require('../middleware/async');
 
 router = express.Router();
-
 
 /**
  * Get all Expenses
@@ -84,7 +83,7 @@ router.put('/:id', asyncMiddleWare(async(req, res) => {
     const { error } = validateExpenseWithItems(req.body);
     if (error) return res.status(400).send(error.details[0].message);  
   
-  const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
 
     const expense = await Expense.findById(id, {
       include: [{
