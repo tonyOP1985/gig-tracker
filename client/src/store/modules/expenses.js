@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { formatArrayDates } from '../../lib/date';
 
 const state = {
   expenses: [],
@@ -27,7 +28,8 @@ const actions = {
 
 const mutations = {
   set_expenses(state, data) {
-    state.expenses = data;
+    let expenses = formatArrayDates(data.expenses);
+    state.expenses = expenses;
   },
   set_expense(state, data) {
     state.expense = data;

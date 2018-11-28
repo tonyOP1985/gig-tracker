@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { formatArrayDates } from '../../lib/date';
 
 const state = {
   gigs: [],
@@ -27,7 +28,8 @@ const actions = {
 
 const mutations = {
   set_gigs(state, data) {
-    state.gigs = data;
+    let gigs = formatArrayDates(data.gigs);
+    state.gigs = gigs;
   },
   set_gig(state, data) {
     state.gig = data;

@@ -10,7 +10,7 @@
     </v-card-title>
     <v-data-table
         :headers="headers"
-        :items="get_gigs.gigs"
+        :items="get_gigs"
         disable-initial-sort>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.date }}</td>

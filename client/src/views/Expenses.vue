@@ -10,7 +10,7 @@
     </v-card-title>
     <v-data-table
         :headers="headers"
-        :items="get_expenses.expenses"
+        :items="get_expenses"
         disable-initial-sort>
       <template slot="items" slot-scope="props">
         <tr @click="props.expanded = !props.expanded">
