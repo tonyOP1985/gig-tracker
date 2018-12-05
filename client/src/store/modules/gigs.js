@@ -23,6 +23,15 @@ const actions = {
   async getGig({ commit }, id) {
     let gig = await axios.get(`/gigs/${id}`);
     commit('set_gig', gig.data);
+  },
+  async addGig({ commit }, gig) {
+    try {
+      let newGig = await axios.post('/gigs', {
+        ...gig
+      });
+    } catch(error) {
+      console.log(error.response);
+    };
   }
 };
 

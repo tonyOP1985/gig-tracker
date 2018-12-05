@@ -21,7 +21,7 @@
                   label="Date">
                 </v-text-field>
                 <v-date-picker
-                  v-model="date"
+                  v-model="gig.date"
                   @change="gigDate = false">
                 </v-date-picker>
               </v-menu>
@@ -29,7 +29,7 @@
             <v-flex xs6>
               <v-text-field
                 prefix="$"
-                v-model="pay"
+                v-model="amount"
                 @keypress="allowOnlyTwoDecimals"
                 label="Pay">
               </v-text-field>
@@ -39,12 +39,13 @@
           <v-layout>
             <v-flex xs6>
               <v-text-field
-                label="City">
+                label="City"
+                v-model="gig.city">
               </v-text-field>
             </v-flex>
             <v-flex xs6>
               <v-combobox
-                v-model="usState"
+                v-model="gig.state"
                 :items="statesList"
                 @change="getAbbreviation"
                 label="State"
@@ -54,7 +55,8 @@
             <v-flex xs6>
               <v-text-field
                 label="Milage"
-                hint="Milage will be rounded up">
+                hint="Milage will be rounded up"
+                v-model="gig.mileage">
               </v-text-field>
             </v-flex>
           </v-layout>
@@ -62,12 +64,14 @@
           <v-layout>
             <v-flex xs6>
               <v-text-field
-                label="Band">
+                label="Band"
+                v-model="gig.band">
               </v-text-field>
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                label="Venue">
+                label="Venue"
+                v-model="gig.venue">
               </v-text-field>
             </v-flex>
           </v-layout>
@@ -79,43 +83,53 @@
 </template>
 
 <script>
+import store from '@/store/store.js';
 import moment from 'moment';
 import { states } from '../lib/states.js';
 import { decimalMixin } from '../mixins/allowOnlyTwoDecimals.js';
+import { reset } from '../mixins/reset.js'
 
 export default {
   name: 'addGig',
-  mixins: [decimalMixin],
+  mixins: [decimalMixin, reset],
   data() {
     return {
-      date: new Date().toISOString().substr(0, 10),
       gigDate: false,
-      pay: '',
-      usState: ''
+      amount: '',
+      usState: '',
+      gig: {
+        date: '',
+        pay: '',
+        city: '',
+        state: this.usState,
+        mileage: '',
+        band: '',
+        venue: ''
+      }
     }
   },
   methods: {
     addGig() {
-      //
+      this.gig.pay = this.amount;
+      store.dispatch('gigs/addGig', this.gig);
+      store.dispatch('gigs/getAllGigs');
+      this.reset();
+      this.$router.push('/gigs');
     },
     getAbbreviation() {
       let getAbbreviation = states.find((state) => {
-        if (this.usState === state.name) {
-          this.usState = state.abbreviation;
+        if (this.gig.state === state.name) {
+          this.gig.state = state.abbreviation;
         }
       });
     }
   },
   computed: {
     formattedDate() {
-      return this.date ? moment(this.date).format('MM/DD/YYYY') : '';
+      return this.gig.date ? moment(this.gig.date).format('MM/DD/YYYY') : '';
     },
     statesList() {
       return states.map(state => state.name);
-    },
-    twoDecimals(value) {
-      this.pay = parseFloat(this.pay).toFixed(2);
-      console.log(this.pay);
     }
   }
 }
