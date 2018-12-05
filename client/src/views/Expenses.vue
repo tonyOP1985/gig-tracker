@@ -3,7 +3,7 @@
     <v-card-title primary-title>
       <div class="headline">Expenses</div>
       <v-spacer></v-spacer>
-      <v-btn color="primary" outline round>
+      <v-btn to="/addexpense" color="primary" outline round>
         <v-icon class="mr-3">add</v-icon>
         Add Expense
       </v-btn>
