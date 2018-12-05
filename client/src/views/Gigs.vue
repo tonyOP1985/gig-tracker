@@ -3,7 +3,7 @@
     <v-card-title primary-title>
       <div class="headline">Gigs</div>
       <v-spacer></v-spacer>
-      <v-btn color="primary">
+      <v-btn color="primary" outline round to="/addgig">
         <v-icon class="mr-3">add</v-icon>
         Add Gig
       </v-btn>
