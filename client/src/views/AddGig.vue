@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import store from '@/store/store.js';
+import store from '@/store';
 import { states } from '../lib/states.js';
 import { decimalMixin } from '../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../mixins/reset.js'

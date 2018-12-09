@@ -46,6 +46,7 @@
           </v-flex>
           <v-flex sm3>
             <v-btn
+                @click="addItem"
                 outline
                 round
                 color="primary"
@@ -55,18 +56,28 @@
             </v-btn>
           </v-flex>
         </v-layout>
+        <div v-if="items">
+          <AddItem v-for="item in items_number" :key="item" />
+        </div>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import store from '@/store';
+import { mapGetters } from 'vuex';
 import { decimalMixin } from '../../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../../mixins/reset.js';
 import { formatDate } from '../../mixins/formatDate.js';
 
+import AddItem from './AddItem';
+
 export default {
   name: 'addexpenseform',
+  components: {
+    AddItem
+  },
   mixins: [decimalMixin, reset, formatDate],
   data() {
     return {
@@ -78,6 +89,14 @@ export default {
         amount: ''
       }
     }
+  },
+  methods: {
+    addItem() {
+      store.commit('items/add_items_number');
+    }
+  },
+  computed: {
+    ...mapGetters('items', ['items_number'])
   }
 };
 </script>
