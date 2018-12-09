@@ -21,7 +21,7 @@
                   label="Date">
                 </v-text-field>
                 <v-date-picker
-                  v-model="gig.date"
+                  v-model="date"
                   @change="gigDate = false">
                 </v-date-picker>
               </v-menu>
@@ -84,18 +84,19 @@
 
 <script>
 import store from '@/store/store.js';
-import moment from 'moment';
 import { states } from '../lib/states.js';
 import { decimalMixin } from '../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../mixins/reset.js'
+import { formatDate } from '../mixins/formatDate.js';
 
 export default {
   name: 'addGig',
-  mixins: [decimalMixin, reset],
+  mixins: [decimalMixin, reset, formatDate],
   data() {
     return {
       gigDate: false,
       amount: '',
+      date: '',
       usState: '',
       gig: {
         date: '',
@@ -111,6 +112,7 @@ export default {
   methods: {
     addGig() {
       this.gig.pay = this.amount;
+      this.gig.date = this.date;
       store.dispatch('gigs/addGig', this.gig);
       store.dispatch('gigs/getAllGigs');
       this.reset();
@@ -125,9 +127,6 @@ export default {
     }
   },
   computed: {
-    formattedDate() {
-      return this.gig.date ? moment(this.gig.date).format('MM/DD/YYYY') : '';
-    },
     statesList() {
       return states.map(state => state.name);
     }

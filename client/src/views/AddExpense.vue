@@ -1,11 +1,16 @@
 <template>
-  <v-container>
-    <h1>Add Expense Form</h1>
+  <v-container grid-list-lg>
+    <AddExpenseForm />
   </v-container>
 </template>
 
 <script>
+import AddExpenseForm from '../components/AddExpenseForms/AddExpenseForm';
+
 export default {
-  name: 'addExpense'
+  name: 'addExpense',
+  components: {
+    AddExpenseForm
+  }
 }
 </script>
