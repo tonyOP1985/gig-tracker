@@ -34,6 +34,27 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <v-layout justify-space-between>
+          <v-flex sm3>
+            <v-btn
+                outline
+                round
+                color="primary"
+                class="ml-4 mb-3">
+              Submit
+            </v-btn>
+          </v-flex>
+          <v-flex sm3>
+            <v-btn
+                outline
+                round
+                color="primary"
+                class="ml-4 mb-3">
+              <v-icon class="mr-2">add</v-icon>
+              Add Item
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-card>
     </v-flex>
   </v-layout>
