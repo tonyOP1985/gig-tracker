@@ -17,11 +17,12 @@
         <td>${{ props.item.total }}</td>
         <td>
           {{ props.item.items.length }} Items
-          <v-btn 
-            :to="{ name: 'expense', params: {id: props.item.id}}"
-            v-if="props.item.items.length"
-            small>
-            View Items
+          <v-btn small flat>
+            <router-link
+              :to="{ name: 'expense', params: {id: props.item.id}}"
+              v-if="props.item.items.length">
+              View Items
+            </router-link>
           </v-btn>
         </td>
         <td>

@@ -34,6 +34,12 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <div v-if="get_items.length">
+          <AddItem
+            v-for="(item, index) in get_items"
+            :key="index"
+            :index="index" />
+        </div>
         <v-layout justify-space-between>
           <v-flex sm3>
             <v-btn
@@ -56,9 +62,6 @@
             </v-btn>
           </v-flex>
         </v-layout>
-        <div v-if="items">
-          <AddItem v-for="item in items_number" :key="item" />
-        </div>
       </v-card>
     </v-flex>
   </v-layout>
@@ -92,11 +95,11 @@ export default {
   },
   methods: {
     addItem() {
-      store.commit('items/add_items_number');
+      store.commit('items/add_item_to_items');
     }
   },
   computed: {
-    ...mapGetters('items', ['items_number'])
+    ...mapGetters('items', ['get_items'])
   }
 };
 </script>

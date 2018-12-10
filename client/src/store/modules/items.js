@@ -1,21 +1,30 @@
 const state = {
-  itemsNumber: 0
+  items: [],
+  item: {
+    item: '',
+    amount: '',
+    quantity: ''
+  }
 };
 
 const getters = {
   items_number: state => {
     return state.itemsNumber;
+  },
+  get_items: state => {
+    return state.items;
   }
 };
 
 const actions = {};
 
 const mutations = {
-  add_items_number(state) {
-    state.itemsNumber++;
+  remove_item(state, index) {
+    state.items.splice(index, 1);
   },
-  remove_from_items_number(state) {
-    state.itemsNumber--;
+  add_item_to_items(state) {
+    let newItem = {};
+    state.items.push(newItem);
   }
 };
 
