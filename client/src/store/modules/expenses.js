@@ -20,9 +20,9 @@ const actions = {
     let expenses = await axios.get('/expenses');
     commit('set_expenses', expenses.data);
   },
-  async getExpense({ commit }, id) {
-    let expense = await axios.get(`/expenses/${id}`);
-    commit('set_expense', expense.data);
+  getExpense({ commit }, id) {
+    let expense = state.expenses.find(expense => expense.id == id);
+    commit('set_expense', expense);
   }
 };
 

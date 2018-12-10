@@ -5,6 +5,7 @@ import Gigs from './views/Gigs.vue';
 import Expenses from './views/Expenses.vue';
 import Expense from './views/Expense.vue';
 import AddGig from './views/AddGig.vue';
+import AddExpense from './views/AddExpense.vue';
 
 Vue.use(Router);
 
@@ -28,7 +29,7 @@ export default new Router({
       component: Expenses
     },
     {
-      path: '/expenses/:id',
+      path: '/expense/:id',
       name: 'expense',
       component: Expense
     },
@@ -36,6 +37,11 @@ export default new Router({
       path: '/addgig',
       name: 'addGig',
       component: AddGig
+    },
+    {
+      path: '/addexpense',
+      name: 'addExpense',
+      component: AddExpense
     }
   ],
 });

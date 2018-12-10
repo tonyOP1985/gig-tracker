@@ -6,9 +6,7 @@
       </v-container>
     </v-layout>
     <v-divider></v-divider>
-    <!-- <v-layout> -->
       <v-container>
-        <!-- <v-layout column> -->
         <v-flex sm12 md6 class="mb-5">
           <v-card class="pb-3">
             <v-card-title>
@@ -91,14 +89,12 @@
             </v-btn>
           </v-card>
         </v-flex>
-        <!-- </v-layout> -->
       </v-container>
-    <!-- </v-layout> -->
   </div>
 </template>
 
 <script>
-import store from '@/store/store.js';
+import store from '@/store';
 import { mapGetters } from 'vuex';
 
 export default {

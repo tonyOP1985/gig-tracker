@@ -3,15 +3,14 @@ import Vuex from 'vuex';
 
 import gigs from './modules/gigs';
 import expenses from './modules/expenses';
-
-const debug = process.env.NODE_ENV !== 'production';
+import items from './modules/items';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     gigs,
-    expenses
-  },
-  strict: debug
+    expenses,
+    items
+  }
 });
