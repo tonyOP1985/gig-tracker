@@ -50,9 +50,21 @@ const validateItem = (item) => {
   return Joi.validate(item, schema);
 };
 
+const validateUser = (user) => {
+  const schema = Joi.object.keys({
+    firstName: Joi.string().min(1).max(30).required(),
+    lastName: Joi.string().min(1).max(30).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().alphanum().min(8).max(50)
+  });
+
+  return Joi.validate(user, schema);
+};
+
 module.exports = {
   validateGig,
   validateExpense,
   validateExpenseWithItems,
-  validateItem
+  validateItem,
+  validateUser
 };
