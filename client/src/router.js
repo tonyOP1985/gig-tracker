@@ -6,6 +6,7 @@ import Expenses from './views/Expenses.vue';
 import Expense from './views/Expense.vue';
 import AddGig from './views/AddGig.vue';
 import AddExpense from './views/AddExpense.vue';
+import RegisterUser from './views/RegisterUser.vue'
 
 Vue.use(Router);
 
@@ -13,6 +14,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/register',
+      name: 'registerUser',
+      component: RegisterUser
+    },
     {
       path: '/',
       name: 'home',

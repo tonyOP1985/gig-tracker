@@ -74,6 +74,10 @@ export default {
         {
           name: 'Expenses',
           link: '/expenses'
+        },
+        {
+          name: 'Sign Up',
+          link: '/register'
         }
       ]
     }

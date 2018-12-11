@@ -51,11 +51,21 @@ const validateItem = (item) => {
 };
 
 const validateUser = (user) => {
-  const schema = Joi.object.keys({
+  const schema = Joi.object().keys({
     firstName: Joi.string().min(1).max(30).required(),
     lastName: Joi.string().min(1).max(30).required(),
     email: Joi.string().email().required(),
-    password: Joi.string().alphanum().min(8).max(50)
+    password1: Joi.string().alphanum().min(8).max(50),
+    password2: Joi.any()
+                  .valid(
+                    Joi.ref('password1'))
+                    .required().options({
+                      language: { 
+                        any: { 
+                          allowOnly: 'must match password' 
+                        }
+                      }
+                    })
   });
 
   return Joi.validate(user, schema);
