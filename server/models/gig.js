@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING,
     user_id: DataTypes.INTEGER
   }, {});
-  Gig.associate = function(models) {
-    Gig.hasMany(models.User);
-  };
+  // Gig.associate = function(models) {
+  //   Gig.hasMany(models.User);
+  // };
   return Gig;
 };
