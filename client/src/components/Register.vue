@@ -1,34 +1,24 @@
 <template>
-  <v-container lg8 offset-lg2>
-    <v-layout column>
-      <v-text-field
-          v-model="newUser.firstName"
-          clearable
-          label="First Name">
-        </v-text-field>
-        <v-text-field
-          v-model="newUser.lastName"
-          clearable
-          label="Last Name">
-        </v-text-field>
-        <v-text-field
-          v-model="newUser.email"
-          clearable
-          label="Email">
-        </v-text-field>
-        <v-text-field
-          v-model="newUser.password1"
-          clearable
-          label="Password">
-        </v-text-field>
-        <v-text-field
-          v-model="newUser.password2"
-          clearable
-          label="Confirm Password">
-        </v-text-field>
-        <v-btn color="primary" @click="submit">
-          Sign Up!
-        </v-btn>
+  <v-container sm12>
+    <v-layout row wrap>
+      <v-flex lg4>
+        <v-card>
+          <v-card-title>
+            <h3>Sign Up!</h3>
+            <v-spacer></v-spacer>
+            <router-link to="/register">Log In</router-link>
+          </v-card-title>
+          <v-flex
+              sm12 lg10 offset-lg1
+              v-for="(input, index) in inputs"
+              :key="index">
+            <v-text-field
+              :v-model="input.model"
+              :label="input.label">
+            </v-text-field>
+          </v-flex>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -46,7 +36,14 @@ export default {
         email: '',
         password1: '',
         password2: ''
-      }
+      },
+      inputs : [
+        { label: 'First Name', model: 'newUser.firstName' },
+        { label: 'Last Name', model: 'newUser.lastName' },
+        { label: 'Email', model: 'newUser.email' },
+        { label: 'Password', model: 'newUser.password1' },
+        { label: 'Confirm Password', model: 'newUser.password2' }
+      ]
     }
   },
   methods: {

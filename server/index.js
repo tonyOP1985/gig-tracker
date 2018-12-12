@@ -3,6 +3,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const db = require('./models');
+const passport = require('passport');
 
 const gigs = require('./routes/gigs');
 const expenses = require('./routes/expenses');
@@ -15,6 +16,9 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(passport.initialize());
+require('./config/passport');
 
 app.use(cors());
 app.use(logger('tiny'));
