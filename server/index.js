@@ -9,6 +9,7 @@ const gigs = require('./routes/gigs');
 const expenses = require('./routes/expenses');
 const items = require('./routes/items');
 const users = require('./routes/users');
+const dashboard = require('./routes/dashboard');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/gigs', gigs);
 app.use('/api/expenses', expenses);
 app.use('/api/items', items);
 app.use('/api/auth', users);
+app.use('/api/dashboard', dashboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

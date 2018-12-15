@@ -3,7 +3,7 @@ const { Item, Expense } = require('../models');
 const { validateItem } = require('../Validation/validation');
 const asyncMiddleWare = require('../middleware/async');
 
-router = express.Router();
+const router = express.Router();
 
 /**
  * Add item
