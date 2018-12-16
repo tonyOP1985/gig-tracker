@@ -39,7 +39,15 @@ router.post(
     newUser.password = await bcrypt.hash(newUser.password, salt);
 
     const user = await User.create(newUser);
-    res.send(user);
+
+    let createdUser = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      id: user.id,
+      createdAt: user.createdAt
+    }
+    res.send(createdUser);
 }));
 
 /**
