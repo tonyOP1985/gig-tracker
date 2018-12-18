@@ -1,13 +1,15 @@
 <template>
-  <v-card>
-    <v-toolbar color="blue darken-1">
-      <v-toolbar-title class="font-weight-bold white--text">Sign up to Gig-Tracker</v-toolbar-title>
-    </v-toolbar>
+  <v-card class="rounded-card" flat>
+    <v-layout>
+      <v-flex>
+        <v-card-title class="headline">Sign Up</v-card-title>
+      </v-flex>
+    </v-layout>
     <v-container>
       <v-layout row>
         <v-flex xs12>
           <v-text-field
-            label="Email"
+            label="Email*"
             type="email"
             required>
           </v-text-field>
@@ -79,3 +81,9 @@ export default {
   name: 'register'
 }
 </script>
+
+<style scoped>
+  .rounded-card {
+    border-radius: 10px;
+  }
+</style>

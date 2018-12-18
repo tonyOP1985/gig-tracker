@@ -1,8 +1,10 @@
 <template>
-  <v-card>
-    <v-toolbar color="blue darken-1">
-      <v-toolbar-title class="font-weight-bold white--text">Sign in to Gig-Tracker</v-toolbar-title>
-    </v-toolbar>
+  <v-card class="rounded-card" flat>
+    <v-layout>
+      <v-flex>
+        <v-card-title class="headline">Sign In</v-card-title>
+      </v-flex>
+    </v-layout>
     <v-container>
       <v-layout row>
         <v-flex xs12>
