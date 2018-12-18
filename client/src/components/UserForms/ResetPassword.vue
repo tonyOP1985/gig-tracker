@@ -1,12 +1,9 @@
 <template>
-  <div>
-    Login Page!!!
-  </div>
+  <h1>Reset Password</h1>
 </template>
 
 <script>
 export default {
-  name: 'login'
+  name: 'reset'
 }
 </script>
-

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="white">
     <router-view></router-view>
   </v-app>
 </template>
@@ -52,7 +52,8 @@ export default {
   }
 
   #app {
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: 'Roboto', sans-serif;
   }
 
   .v-btn {

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Splash from './views/Splash.vue';
-import LoginUser from './views/LoginUser.vue';
 import Main from './views/Main.vue';
 import Home from './views/Home.vue';
 import Gigs from './views/Gigs.vue';
@@ -9,7 +8,10 @@ import Expenses from './views/Expenses.vue';
 import Expense from './views/Expense.vue';
 import AddGig from './views/AddGig.vue';
 import AddExpense from './views/AddExpense.vue';
-import RegisterUser from './views/RegisterUser.vue'
+import Auth from './views/Auth.vue';
+import Login from './components/UserForms/Login.vue';
+import Register from './components/UserForms/Register.vue';
+import ResetPassword from './components/UserForms/ResetPassword.vue';
 
 Vue.use(Router);
 
@@ -24,13 +26,24 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'login',
-      component: LoginUser
-    },
-    {
-      path: '/register',
-      name: 'registerUser',
-      component: RegisterUser
+      component: Auth,
+      children: [
+        {
+          path: '/login',
+          name: 'login',
+          component: Login
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: Register
+        },
+        {
+          path: '/reset',
+          name: 'reset',
+          component: ResetPassword
+        }
+      ]
     },
     {
       path: '/',
