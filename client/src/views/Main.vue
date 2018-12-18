@@ -4,9 +4,9 @@
         v-model="drawer"
         absolute
         temporary>
-      <v-toolbar flat color="blue darken-4">
+      <v-toolbar class="elevation-0" color="blue">
         <router-link to="/">
-          <v-toolbar-title class="white--text">Gig Tracker</v-toolbar-title>
+          <v-toolbar-title class="font-weight-bold white--text">Gig Tracker</v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
         <v-btn flat class="white--text" @click="drawer = !drawer">
@@ -24,10 +24,10 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app color="blue darken-4" dark>
+    <v-toolbar app color="blue" class="elevation-0" dark>
       <v-toolbar-side-icon @click="drawer = !drawer" class="hamburger"></v-toolbar-side-icon>
       <router-link to="/">
-        <v-toolbar-title class="white--text">Gig Tracker</v-toolbar-title>
+        <v-toolbar-title class="font-weight-bold white--text">Gig Tracker</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -94,8 +94,9 @@ export default {
     text-decoration: none;
   }
 
-  #app {
-    font-family: 'Open Sans', sans-serif;
+  .v-toolbar__title {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 2em;
   }
 
   .v-btn {
