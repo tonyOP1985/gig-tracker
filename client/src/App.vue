@@ -1,5 +1,9 @@
 <template>
   <v-app class="white">
+    <notifications 
+      position="bottom right"
+      :duration="5000"
+      :max="1"/>
     <router-view></router-view>
   </v-app>
 </template>

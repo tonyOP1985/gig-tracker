@@ -3,7 +3,7 @@
     <v-card-title primary-title>
       <div class="headline">Expenses</div>
       <v-spacer></v-spacer>
-      <v-btn to="/addexpense" color="primary" outline round>
+      <v-btn to="/addexpense" color="primary">
         <v-icon class="mr-3">add</v-icon>
         Add Expense
       </v-btn>
@@ -43,11 +43,14 @@
 <script>
 import store from '@/store';
 import { mapGetters } from 'vuex';
+import { windowWidth } from '../../mixins/windowWidth.js';
 
 export default {
   name: 'expenses',
+  mixins: [windowWidth],
   data() {
     return {
+      windowWidth: 0,
       headers: [
         { text: 'Date', value: 'date' },
         { text: 'Total', value: 'total' },

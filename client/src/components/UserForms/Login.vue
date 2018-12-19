@@ -31,7 +31,7 @@
           </v-card-actions>
         </v-flex>
       </v-layout>
-      <v-layout class="mt-5">
+      <v-layout class="mt-1">
         <v-flex xs12>
           <v-card-text>
             <p class="text-xs-center">

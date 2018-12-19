@@ -13,7 +13,7 @@
               <h2 class="display-1 mt-3">{{ get_expense.total }}</h2>
             </v-flex>
             <v-flex md3 align-self-start>
-              <v-btn to="/expenses" color="primary" outline round>
+              <v-btn to="/expenses" color="primary">
                 Return to Expenses
               </v-btn>
             </v-flex>

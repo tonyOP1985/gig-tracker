@@ -64,7 +64,7 @@ export default {
       ],
       toolbarItems: [
         {
-          name: 'Home',
+          name: 'Dashboard',
           link: '/'
         },
         {
@@ -76,8 +76,8 @@ export default {
           link: '/expenses'
         },
         {
-          name: 'Sign Up',
-          link: '/register'
+          name: 'Logout',
+          link: '/login'
         }
       ]
     }

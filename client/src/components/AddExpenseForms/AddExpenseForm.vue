@@ -40,28 +40,27 @@
             :key="index"
             :index="index" />
         </div>
-        <v-layout justify-space-between>
-          <v-flex sm3>
-            <v-btn
-                outline
-                round
-                color="primary"
-                class="ml-4 mb-3">
-              Submit
-            </v-btn>
-          </v-flex>
-          <v-flex sm3>
-            <v-btn
-                @click="addItem"
-                outline
-                round
-                color="primary"
-                class="ml-4 mb-3">
-              <v-icon class="mr-2">add</v-icon>
-              Add Item
-            </v-btn>
-          </v-flex>
-        </v-layout>
+        <v-container>
+          <v-layout column>
+            <v-flex xs12>
+              <v-btn
+                  @click="addItem"
+                  block
+                  dark
+                  color="green">
+                <v-icon class="mr-2">add</v-icon>
+                Add Item
+              </v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <v-btn
+                  block
+                  color="primary">
+                Submit
+              </v-btn>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </v-card>
     </v-flex>
   </v-layout>
