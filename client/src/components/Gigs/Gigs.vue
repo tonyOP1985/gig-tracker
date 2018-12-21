@@ -33,46 +33,55 @@
       </template>
     </v-data-table>
 
-    <v-container v-else-if="windowWidth <= 959" grid-list-sm align-center>
-      <v-layout column>
-        <v-flex xs12 sm4 offset-sm4
-            v-for="(item, index) in get_gigs"
-            :key="index">
-          <v-card>
-            <v-list dense>
+    <v-data-iterator
+        v-else-if="windowWidth <= 959"
+        content-class="v-layout"
+        :items="get_gigs"
+        :rows-per-page-items="[4,8]"
+        :pagination.sync="pagination"
+        row
+        wrap>
+      <v-flex
+          slot="item"
+          slot-scope="props"
+          class="mb-2"
+          xs12
+          sm6
+          offset-sm3>
+        <v-card>
+          <v-list dense>
               <v-list-tile>
                 <v-list-tile-content>Date:</v-list-tile-content>
-                <v-list-tile-content class="align-end">{{ item.date }}</v-list-tile-content>
+                <v-list-tile-content class="align-end">{{ props.item.date }}</v-list-tile-content>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-content>Pay:</v-list-tile-content>
-                <v-list-tile-content class="align-end">${{ item.pay }}</v-list-tile-content>
+                <v-list-tile-content class="align-end">${{ props.item.pay }}</v-list-tile-content>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-content>Venue:</v-list-tile-content>
-                <v-list-tile-content class="align-end">{{ item.venue }}</v-list-tile-content>
+                <v-list-tile-content class="align-end">{{ props.item.venue }}</v-list-tile-content>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-content>Band:</v-list-tile-content>
-                <v-list-tile-content class="align-end">{{ item.band }}</v-list-tile-content>
+                <v-list-tile-content class="align-end">{{ props.item.band }}</v-list-tile-content>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-content>Location:</v-list-tile-content>
-                <v-list-tile-content class="align-end">{{ item.city }}, {{ item.state }}</v-list-tile-content>
+                <v-list-tile-content class="align-end">{{ props.item.city }}, {{ props.item.state }}</v-list-tile-content>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-content>Mileage:</v-list-tile-content>
-                <v-list-tile-content class="align-end">{{ item.mileage }} miles</v-list-tile-content>
+                <v-list-tile-content class="align-end">{{ props.item.mileage }} miles</v-list-tile-content>
               </v-list-tile>
             </v-list>
             <v-card-actions>
               <v-btn flat color="green">Edit</v-btn>
               <v-btn flat color="red">Delete</v-btn>
             </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+        </v-card>
+      </v-flex>
+    </v-data-iterator>
   </v-card>
 </template>
 

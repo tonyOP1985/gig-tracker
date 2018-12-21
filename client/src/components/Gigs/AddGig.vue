@@ -116,7 +116,7 @@ export default {
     },
     getAbbreviation() {
       let getAbbreviation = states.find((state) => {
-        if (this.gig.state === state.name) {
+        if (this.gig.state === state.abbreviation) {
           this.gig.state = state.abbreviation;
         }
       });
@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     statesList() {
-      return states.map(state => state.name);
+      return states.map(state => state.abbreviation);
     }
   }
 }

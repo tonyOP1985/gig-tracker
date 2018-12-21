@@ -38,6 +38,12 @@
             :to="item.link">
           {{ item.name }}
         </v-btn>
+        <v-btn
+          flat
+          to="/login"
+          @click="logout">
+          Logout
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
 
@@ -74,10 +80,6 @@ export default {
         {
           name: 'Expenses',
           link: '/expenses'
-        },
-        {
-          name: 'Logout',
-          link: '/login'
         }
       ]
     }
@@ -85,6 +87,11 @@ export default {
   mounted() {
     store.dispatch('gigs/getAllGigs');
     store.dispatch('expenses/getAllExpenses');
+  },
+  methods: {
+    logout() {
+      store.dispatch('authenticate/logout');
+    }
   }
 }
 </script>

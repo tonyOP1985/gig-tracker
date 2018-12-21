@@ -22,11 +22,17 @@ export default new Router({
     {
       path: '/splash',
       name: 'splash',
-      component: Splash
+      component: Splash,
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: '/login',
       component: Auth,
+      meta: {
+        requiresAuth: false
+      },
       children: [
         {
           path: '/login',
@@ -41,17 +47,20 @@ export default new Router({
         {
           path: '/reset',
           name: 'reset',
-          component: ResetPassword
+          component: ResetPassword,
         }
       ]
     },
     {
       path: '/',
       component: Main,
+      meta: {
+        requiresAuth: true
+      },
       children: [
         {
           path: '/',
-          component: Home,
+          component: Home
         },
         {
           path: '/gigs',

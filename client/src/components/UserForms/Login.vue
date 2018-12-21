@@ -11,6 +11,7 @@
           <v-text-field
             label="Email*"
             type="email"
+            v-model="user.email"
             required>
           </v-text-field>
         </v-flex>
@@ -20,6 +21,7 @@
           <v-text-field
             label="Password*"
             type="password"
+            v-model="user.password"
             required>
           </v-text-field>
         </v-flex>
@@ -27,7 +29,7 @@
       <v-layout class="mt-3">
         <v-flex>
           <v-card-actions>
-            <v-btn block color="primary">Sign In</v-btn>
+            <v-btn block color="primary" @click="login">Sign In</v-btn>
           </v-card-actions>
         </v-flex>
       </v-layout>
@@ -50,7 +52,36 @@
 </template>
 
 <script>
+import store from '@/store';
+import { mapGetters } from 'vuex';
+
 export default {
-  name: 'login'
-}
+  name: 'login',
+  data() {
+    return {
+      user: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    login() {
+      store.dispatch('authenticate/loginUser', this.user);
+    }
+  },
+  computed: {
+    loggedInUser() {
+      return this.get_user;
+    },
+    ...mapGetters('authenticate', ['get_user'])
+  },
+  watch: {
+    loggedInUser(value) {
+      if (value !== null & value !== undefined) {
+        this.$router.push('/');
+      }
+    }
+  }
+};
 </script>

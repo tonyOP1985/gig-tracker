@@ -11,6 +11,7 @@
           <v-text-field
             label="Email*"
             type="email"
+            v-model="newUser.email"
             required>
           </v-text-field>
         </v-flex>
@@ -20,6 +21,7 @@
           <v-text-field
             label="First Name*"
             type="text"
+            v-model="newUser.firstName"
             required>
           </v-text-field>
         </v-flex>
@@ -29,6 +31,7 @@
           <v-text-field
             label="Last Name*"
             type="text"
+            v-model="newUser.lastName"
             required>
           </v-text-field>
         </v-flex>
@@ -38,6 +41,7 @@
           <v-text-field
             label="Password*"
             type="password"
+            v-model="newUser.password1"
             required>
           </v-text-field>
         </v-flex>
@@ -47,6 +51,7 @@
           <v-text-field
             label="Confirm Password*"
             type="password"
+            v-model="newUser.password2"
             required>
           </v-text-field>
         </v-flex>
@@ -54,7 +59,12 @@
       <v-layout class="mt-3">
         <v-flex>
           <v-card-actions>
-            <v-btn block color="primary">Sign Up</v-btn>
+            <v-btn
+              @click="registerUser"
+              block
+              color="primary">
+              Sign Up
+            </v-btn>
           </v-card-actions>
         </v-flex>
       </v-layout>
@@ -77,8 +87,26 @@
 </template>
 
 <script>
+import store from '@/store';
+
 export default {
-  name: 'register'
+  name: 'register',
+  data() {
+    return {
+      newUser: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        password1: '',
+        password2: ''
+      }
+    }
+  },
+  methods: {
+    registerUser() {
+      store.dispatch('authenticate/registerUser', this.newUser);
+    }
+  }
 }
 </script>
 
