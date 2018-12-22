@@ -29,7 +29,7 @@
                 prefix="$"
                 v-model="amount"
                 @keypress="allowOnlyTwoDecimals"
-                label="Pay">
+                label="Total Cost">
               </v-text-field>
             </v-flex>
           </v-layout>

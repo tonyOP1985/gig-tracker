@@ -1,10 +1,5 @@
 const state = {
-  items: [],
-  item: {
-    item: '',
-    amount: '',
-    quantity: ''
-  }
+  items: []
 };
 
 const getters = {
@@ -25,6 +20,9 @@ const mutations = {
   add_item_to_items(state) {
     let newItem = {};
     state.items.push(newItem);
+  },
+  add_details_to_item(state, payload) {
+    state.items[payload.index] = payload.details;
   }
 };
 
