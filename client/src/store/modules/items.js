@@ -23,6 +23,14 @@ const mutations = {
   },
   add_details_to_item(state, payload) {
     state.items[payload.index] = payload.details;
+    this._vm.$notify({
+      type: 'success',
+      title: 'Success',
+      text: 'Item Saved.'
+    });
+  },
+  clear_items(state) {
+    state.items = [];
   }
 };
 
