@@ -5,28 +5,34 @@
         <h3 class="blue--text">{{ item }}</h3>
       </v-flex>
     </v-layout>
-    <v-layout>
-      <v-flex xs6>
+    <v-layout row wrap>
+      <v-flex xs12 sm4>
         <v-text-field
           v-model="item"
           clearable
+          :rules="rules"
+          required
           label="Item Name">
         </v-text-field>
       </v-flex>
-      <v-flex xs6>
+      <v-flex xs12 sm4>
         <v-text-field
           prefix="$"
           v-model="amount"
           @keypress="allowOnlyTwoDecimals"
+          :rules="rules"
+          required
           clearable
           label="Price">
         </v-text-field>
       </v-flex>
-      <v-flex xs6>
+      <v-flex xs12 sm4>
         <v-text-field
           v-model="quantity"
           type="number"
           min="1"
+          :rules="rules"
+          required
           clearable
           label="Item Quantity">
         </v-text-field>
@@ -35,8 +41,9 @@
     <v-layout>
       <v-flex sm2>
         <v-btn
+            @click="addItemDetails(index)"
             flat
-            color="green">
+            color="blue accent-1">
           <v-icon class="mr-2">save</v-icon>
           Save Item
         </v-btn>
@@ -56,6 +63,7 @@
 
 <script>
 import store from '@/store';
+import { mapGetters } from 'vuex';
 import { decimalMixin } from '../../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../../mixins/reset.js';
 
@@ -67,14 +75,31 @@ export default {
     return {
       item: '',
       amount: '',
-      quantity: ''
+      quantity: '',
+      rules: [v => !!v || 'Required']
     }
   },
   methods: {
     removeItem(index) {
-      console.log(this.index);
       store.commit('items/remove_item', index);
+    },
+    addItemDetails(index) {
+      let details = this.get_items[index];
+
+      details.item = this.item;
+      details.price = this.amount;
+      details.quantity = this.quantity;
+
+      let payload = {
+        details,
+        index
+      };
+
+      store.commit('items/add_details_to_item', payload);
     }
+  },
+  computed: {
+    ...mapGetters('items', ['get_items'])
   }
 };
 </script>

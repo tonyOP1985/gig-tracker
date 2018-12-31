@@ -23,6 +23,18 @@ const actions = {
   getExpense({ commit }, id) {
     let expense = state.expenses.find(expense => expense.id == id);
     commit('set_expense', expense);
+  },
+  async addExpense({ commit, dispatch }, payload) {
+    try {
+      let newExpense = await axios.post('/expenses/items', payload);
+      dispatch('getAllExpenses');
+    } catch(error) {
+      this._vm.$notify({
+        type: 'error',
+        title: 'Error',
+        text: error.response.data
+      });
+    };
   }
 };
 

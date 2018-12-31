@@ -29,7 +29,7 @@
                 prefix="$"
                 v-model="amount"
                 @keypress="allowOnlyTwoDecimals"
-                label="Pay">
+                label="Total Cost">
               </v-text-field>
             </v-flex>
           </v-layout>
@@ -42,7 +42,9 @@
         </div>
         <v-container>
           <v-layout column>
-            <v-flex xs12>
+            <v-flex
+                v-if="!get_items.length"
+                xs12>
               <v-btn
                   @click="addItem"
                   block
@@ -52,8 +54,21 @@
                 Add Item
               </v-btn>
             </v-flex>
+            <v-flex
+                v-else
+                xs12>
+              <v-btn
+                  @click="addItem"
+                  block
+                  dark
+                  color="green">
+                <v-icon class="mr-2">add</v-icon>
+                Add Another Item
+              </v-btn>
+            </v-flex>
             <v-flex xs12>
               <v-btn
+                  @click="addExpense"
                   block
                   color="primary">
                 Submit
@@ -85,16 +100,23 @@ export default {
     return {
       purchaseDate: false,
       amount: '',
-      date: '',
-      expense: {
-        date: '',
-        amount: ''
-      }
+      date: ''
     }
   },
   methods: {
     addItem() {
       store.commit('items/add_item_to_items');
+    },
+    addExpense() {
+      let payload = {
+        date: this.date,
+        total: this.amount,
+        items: this.get_items
+      };
+
+      store.dispatch('expenses/addExpense', payload);
+      store.commit('items/clear_items');
+      this.reset();
     }
   },
   computed: {
