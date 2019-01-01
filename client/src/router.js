@@ -7,6 +7,7 @@ import Gigs from './components/Gigs/Gigs.vue';
 import Expenses from './components/Expenses/Expenses.vue';
 import Expense from './components/Expenses/Expense.vue';
 import AddGig from './components/Gigs/AddGig.vue';
+import EditGig from './components/Gigs/EditGig.vue';
 import AddExpense from './views/AddExpense.vue';
 import Auth from './views/Auth.vue';
 import Login from './components/UserForms/Login.vue';
@@ -81,6 +82,11 @@ export default new Router({
           path: '/addgig',
           name: 'addGig',
           component: AddGig
+        },
+        {
+          path: '/editgig/:id',
+          name: 'editGig',
+          component: EditGig
         },
         {
           path: '/addexpense',

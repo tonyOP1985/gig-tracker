@@ -8,6 +8,7 @@
         Add Gig
       </v-btn>
     </v-card-title>
+    <!-- Large screens -->
     <v-data-table
         v-if="windowWidth > 959"
         :headers="headers"
@@ -21,18 +22,31 @@
         <td>{{ props.item.city }}, {{ props.item.state }}</td>
         <td>{{ props.item.mileage }} miles</td>
         <td>
-          <v-icon
+          <v-btn
+              flat
               small
-              class="mr-2">
-            edit
-          </v-icon>
-          <v-icon small>
-            delete
-          </v-icon>
+              :to="{ name: 'editGig', params: {id: props.item.id}}">
+            <v-icon
+                small
+                color="green"
+                class="mr-2">
+              edit
+            </v-icon>
+          </v-btn>
+          <v-btn
+              flat
+              small>
+            <v-icon
+                small
+                color="red">
+              delete
+            </v-icon>
+          </v-btn>
         </td>
       </template>
     </v-data-table>
 
+    <!-- Medium and small screens -->
     <v-data-iterator
         v-else-if="windowWidth <= 959"
         content-class="v-layout"
@@ -76,8 +90,17 @@
               </v-list-tile>
             </v-list>
             <v-card-actions>
-              <v-btn flat color="green">Edit</v-btn>
-              <v-btn flat color="red">Delete</v-btn>
+              <v-btn
+                  flat
+                  color="green"
+                  :to="{ name: 'editGig', params: {id: props.item.id}}">
+                Edit
+              </v-btn>
+              <v-btn
+                  flat
+                  color="red">
+                Delete
+              </v-btn>
             </v-card-actions>
         </v-card>
       </v-flex>
