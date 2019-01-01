@@ -80,6 +80,7 @@
 
 <script>
 import store from '@/store';
+import { mapGetters } from 'vuex';
 import { states } from '../../lib/states.js';
 import { decimalMixin } from '../../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../../mixins/reset.js'
@@ -109,6 +110,7 @@ export default {
     addGig() {
       this.gig.pay = this.amount;
       this.gig.date = this.date;
+      this.gig.user_id = this.get_user.id;
       store.dispatch('gigs/addGig', this.gig);
       store.dispatch('gigs/getAllGigs');
       this.reset();
@@ -125,7 +127,8 @@ export default {
   computed: {
     statesList() {
       return states.map(state => state.abbreviation);
-    }
+    },
+    ...mapGetters('authenticate', ['get_user'])
   }
 }
 </script>

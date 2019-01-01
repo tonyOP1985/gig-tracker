@@ -16,8 +16,11 @@ const getters = {
 };
 
 const actions = {
-  async getAllGigs({ commit }) {
-    let gigs = await axios.get('/gigs');
+  async getAllGigs({ commit, rootState }) {
+    let user = rootState.authenticate.user;
+    // TODO: Keep this two lines of code
+    // replace 13 with user.id
+    let gigs = await axios.get(`/gigs/${13}`);
     commit('set_gigs', gigs.data);
   },
   async getGig({ commit }, id) {
@@ -29,8 +32,18 @@ const actions = {
       let newGig = await axios.post('/gigs', {
         ...gig
       });
+      this._vm.$notify({
+        type: 'success',
+        title: 'Success',
+        text: 'Gig Added'
+      });
     } catch(error) {
       console.log(error.response);
+      this._vm.$notify({
+        type: 'error',
+        title: 'Error',
+        text: error.response.data
+      });
     };
   }
 };
