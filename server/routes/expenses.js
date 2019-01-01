@@ -8,8 +8,11 @@ router = express.Router();
 /**
  * Get all Expenses
  */
-router.get('/', asyncMiddleWare(async(req, res) => {
+router.get('/:id', asyncMiddleWare(async(req, res) => {
     const expenses = await Expense.findAll({
+      where: {
+        user_id: req.params.id
+      },
       order: [
         ['date', 'DESC']
       ],

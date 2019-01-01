@@ -34,16 +34,16 @@
             </v-flex>
           </v-layout>
         </v-container>
-        <div v-if="get_items.length">
+        <div v-if="items.length">
           <AddItem
-            v-for="(item, index) in get_items"
+            v-for="(item, index) in items"
             :key="index"
             :index="index" />
         </div>
         <v-container>
           <v-layout column>
             <v-flex
-                v-if="!get_items.length"
+                v-if="!items.length"
                 xs12>
               <v-btn
                   @click="addItem"
@@ -109,9 +109,10 @@ export default {
     },
     addExpense() {
       let payload = {
+        user_id: this.user.id,
         date: this.date,
         total: this.amount,
-        items: this.get_items
+        items: this.items
       };
 
       store.dispatch('expenses/addExpense', payload);
@@ -120,7 +121,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('items', ['get_items'])
+    ...mapGetters({
+      items: 'items/get_items',
+      user: 'authenticate/get_user'
+    })
   }
 };
 </script>

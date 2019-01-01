@@ -8,8 +8,11 @@ const router = express.Router();
 /**
  * GET gigs listing
  */
-router.get('/', asyncMiddleWare(async(req, res) => {
+router.get('/:userid', asyncMiddleWare(async(req, res) => {
     const gigs = await Gig.findAll({
+      where: {
+        user_id: req.params.userid
+      },
       order: [
         ['date', 'DESC']
       ]

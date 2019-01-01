@@ -16,8 +16,10 @@ const getters = {
 };
 
 const actions = {
-  async getAllExpenses({ commit }) {
-    let expenses = await axios.get('/expenses');
+  async getAllExpenses({ commit, rootState }) {
+    // let user = rootState.authenticate.user;
+    // TODO: replace 13 with user.id
+    let expenses = await axios.get(`/expenses/${13}`);
     commit('set_expenses', expenses.data);
   },
   getExpense({ commit }, id) {

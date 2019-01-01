@@ -8,8 +8,9 @@ const validateGig = (gig) => {
     band: Joi.string().min(1).max(255),
     mileage: Joi.string().min(1).max(255),
     city: Joi.string().min(1).max(255),
-    state: Joi.string().min(1).max(255)
-  }).unknown();
+    state: Joi.string().min(1).max(255),
+    user_id: Joi.number().required()
+  });
 
   return Joi.validate(gig, schema);
 };
