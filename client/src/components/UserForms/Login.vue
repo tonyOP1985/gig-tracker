@@ -66,8 +66,12 @@ export default {
     }
   },
   methods: {
-    login() {
-      store.dispatch('authenticate/loginUser', this.user);
+    async login() {
+      try {
+        let loggedIn = await store.dispatch('authenticate/loginUser', this.user);
+      } catch(error) {
+        this.$notify(error.notifyParams);
+      };
     }
   },
   computed: {
