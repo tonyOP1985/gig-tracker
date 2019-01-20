@@ -107,14 +107,24 @@ export default {
     }
   },
   methods: {
-    addGig() {
-      this.gig.pay = this.amount;
-      this.gig.date = this.date;
-      this.gig.user_id = this.get_user.id;
-      store.dispatch('gigs/addGig', this.gig);
-      store.dispatch('gigs/getAllGigs');
-      this.reset();
-      this.$router.push('/gigs');
+    async addGig() {
+      try {
+        this.gig.pay = this.amount;
+        this.gig.date = this.date;
+        // this.gig.user_id = this.get_user.id;
+        this.gig.user_id = 13;
+        let newGig = await store.dispatch('gigs/addGig', this.gig);
+        await store.dispatch('gigs/getAllGigs');
+        this.reset();
+        this.$router.push('/gigs');
+        this.$notify(newGig);
+      } catch (error) {
+        if (error.notifyParams) {
+          this.$notify(error.notifyParams);
+        } else {
+          throw error;
+        }
+      };
     },
     getAbbreviation() {
       let getAbbreviation = states.find((state) => {

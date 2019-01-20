@@ -46,7 +46,12 @@ app.use(function(err, req, res, next) {
     .status(err.status || 500)
     .json({
       message: err.message,
-      error: {}
+      error: {},
+      notifyParams: {
+        group: 'default',
+        title: err.message,
+        type: 'error'
+      }
     });
 });
 

@@ -2,13 +2,13 @@ const Joi = require('joi');
 
 const validateGig = (gig) => {
   const schema = Joi.object().keys({
-    date: Joi.date().iso().required(),
-    pay: Joi.string().min(1).max(10),
-    venue: Joi.string().min(1).max(255),
-    band: Joi.string().min(1).max(255),
-    mileage: Joi.string().min(1).max(255),
-    city: Joi.string().min(1).max(255),
-    state: Joi.string().min(1).max(255),
+    date: Joi.date().iso().required().error(() => 'Date is required.'),
+    pay: Joi.string().min(1).max(10).error(() => 'Pay is required.'),
+    venue: Joi.string().min(1).max(255).error(() => 'Venue is required.'),
+    band: Joi.string().min(1).max(255).error(() => 'Band is required.'),
+    mileage: Joi.string().min(1).max(255).error(() => 'Milage is required.'),
+    city: Joi.string().min(1).max(255).error(() => 'City is required.'),
+    state: Joi.string().min(1).max(255).error(() => 'State is required.'),
     user_id: Joi.number().required()
   });
 
@@ -17,8 +17,8 @@ const validateGig = (gig) => {
 
 const validateExpense = (expense) => {
   const schema = Joi.object().keys({
-    date: Joi.date().iso().required(),
-    total: Joi.string().min(1).max(255)
+    date: Joi.date().iso().required().error(() => 'Date is required.'),
+    total: Joi.string().min(1).max(255).error(() => 'Total is required.')
   }).unknown();
 
   return Joi.validate(expense, schema);
@@ -26,14 +26,14 @@ const validateExpense = (expense) => {
 
 const validateExpenseWithItems = (expense) => {
   const items = Joi.object().keys({
-    item: Joi.string().min(1).max(255),
-    quantity: Joi.string().min(1).max(255),
-    price: Joi.string().min(1).max(255)
+    item: Joi.string().min(1).max(255).error(() => 'Item is required.'),
+    quantity: Joi.string().min(1).max(255).error(() => 'Quantity is required.'),
+    price: Joi.string().min(1).max(255).error(() => 'Price is required.')
   }).unknown();
 
   const schema = Joi.object().keys({
-    date: Joi.date().iso().required(),
-    total: Joi.string().min(1).max(255),
+    date: Joi.date().iso().required().error(() => 'Date is required.'),
+    total: Joi.string().min(1).max(255).error(() => 'Total is required.'),
     items: Joi.array().items(items)
   }).unknown();
 

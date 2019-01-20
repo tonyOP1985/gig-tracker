@@ -4,35 +4,42 @@
       <v-card>
         <v-card-title>Add New Expense</v-card-title>
         <v-container>
-          <v-layout>
-            <v-flex xs6>
-              <v-menu
-                  v-model="purchaseDate"
-                  :close-on-content-click="false"
-                  full-width
-                  max-width="290">
+          <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation>
+            <v-layout>
+              <v-flex xs6>
+                <v-menu
+                    v-model="purchaseDate"
+                    :close-on-content-click="false"
+                    full-width
+                    max-width="290">
+                  <v-text-field
+                    slot="activator"
+                    :value="formattedDate"
+                    :rules="rules"
+                    clearable
+                    readonly
+                    label="Date">
+                  </v-text-field>
+                  <v-date-picker
+                    v-model="date"
+                    @change="purchaseDate = false">
+                  </v-date-picker>
+                </v-menu>
+              </v-flex>
+              <v-flex xs6>
                 <v-text-field
-                  slot="activator"
-                  :value="formattedDate"
-                  clearable
-                  readonly
-                  label="Date">
+                  prefix="$"
+                  v-model="amount"
+                  :rules="rules"
+                  @keypress="allowOnlyTwoDecimals"
+                  label="Total Cost">
                 </v-text-field>
-                <v-date-picker
-                  v-model="date"
-                  @change="purchaseDate = false">
-                </v-date-picker>
-              </v-menu>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                prefix="$"
-                v-model="amount"
-                @keypress="allowOnlyTwoDecimals"
-                label="Total Cost">
-              </v-text-field>
-            </v-flex>
-          </v-layout>
+              </v-flex>
+            </v-layout>
+          </v-form>
         </v-container>
         <div v-if="items.length">
           <AddItem
@@ -87,6 +94,7 @@ import { mapGetters } from 'vuex';
 import { decimalMixin } from '../../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../../mixins/reset.js';
 import { formatDate } from '../../mixins/formatDate.js';
+import { validate } from '../../mixins/validate.js';
 
 import AddItem from './AddItem';
 
@@ -95,7 +103,7 @@ export default {
   components: {
     AddItem
   },
-  mixins: [decimalMixin, reset, formatDate],
+  mixins: [decimalMixin, reset, formatDate, validate],
   data() {
     return {
       purchaseDate: false,
@@ -107,17 +115,29 @@ export default {
     addItem() {
       store.commit('items/add_item_to_items');
     },
-    addExpense() {
-      let payload = {
-        user_id: this.user.id,
+    async addExpense() {
+      try {
+        this.validate();
+        let payload = {
+        // user_id: this.user.id,
+        user_id: 13,
         date: this.date,
         total: this.amount,
         items: this.items
       };
 
-      store.dispatch('expenses/addExpense', payload);
-      store.commit('items/clear_items');
-      this.reset();
+        let newExpense = await store.dispatch('expenses/addExpense', payload);
+        store.commit('items/clear_items');
+        this.reset();
+
+        this.$notify(newExpense);
+      } catch (error) {
+        if (error.notifyParams) {
+          this.$notify(error.notifyParams);
+        } else {
+          throw error;
+        }
+      };
     }
   },
   computed: {

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { formatArrayDates } from '../../lib/date';
+import { APIException, HTTPException } from '../../exceptions';
 
 const state = {
   gigs: [],
@@ -29,21 +30,20 @@ const actions = {
   },
   async addGig({ commit }, gig) {
     try {
-      let newGig = await axios.post('/gigs', {
+      await axios.post('/gigs', {
         ...gig
       });
-      this._vm.$notify({
-        type: 'success',
-        title: 'Success',
-        text: 'Gig Added'
-      });
+      return {
+        group: 'default',
+        title: 'Gig Added',
+        type: 'success'
+      }
     } catch(error) {
-      console.log(error.response);
-      this._vm.$notify({
-        type: 'error',
-        title: 'Error',
-        text: error.response.data
-      });
+      if (error.response.data) {
+        throw new APIException(error.response.data);
+      } else {
+        throw error;
+      }  
     };
   }
 };
