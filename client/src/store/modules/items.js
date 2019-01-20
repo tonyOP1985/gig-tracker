@@ -11,7 +11,20 @@ const getters = {
   }
 };
 
-const actions = {};
+const actions = {
+  removeItem({ commit }, index) {
+    commit('remove_item', index);
+  },
+  addItemToItems({ commit }) {
+    commit('add_item_to_items');
+  },
+  addDetailsToItem({ commit }, payload) {
+    commit('add_details_to_item', payload);
+  },
+  clearItems({ commit }) {
+    commit('clear_items');
+  }
+};
 
 const mutations = {
   remove_item(state, index) {

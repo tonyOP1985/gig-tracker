@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     removeItem(index) {
-      store.commit('items/remove_item', index);
+      store.dispatch('items/removeItem', index);
     },
     addItemDetails(index) {
       try {
@@ -107,7 +107,7 @@ export default {
           index
         };
 
-        store.commit('items/add_details_to_item', payload);
+        store.dispatch('items/addDetailsToItem', payload);
         this.$notify({
           group: 'default',
           title: 'Item saved.',
