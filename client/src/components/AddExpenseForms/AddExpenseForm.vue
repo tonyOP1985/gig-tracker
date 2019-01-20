@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     addItem() {
-      store.commit('items/add_item_to_items');
+      store.dispatch('items/addItemToItems');
     },
     async addExpense() {
       try {
@@ -127,7 +127,7 @@ export default {
       };
 
         let newExpense = await store.dispatch('expenses/addExpense', payload);
-        store.commit('items/clear_items');
+        store.dispatch('items/clearItems');
         this.reset();
 
         this.$notify(newExpense);
