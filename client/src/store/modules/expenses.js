@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { formatArrayDates } from '../../lib/date';
+import { APIException } from '../../exceptions';
 
 const state = {
   expenses: [],
@@ -26,16 +27,21 @@ const actions = {
     let expense = state.expenses.find(expense => expense.id == id);
     commit('set_expense', expense);
   },
-  async addExpense({ commit, dispatch }, payload) {
+  async addExpense({ dispatch }, payload) {
     try {
-      let newExpense = await axios.post('/expenses/items', payload);
+      await axios.post('/expenses/items', payload);
       dispatch('getAllExpenses');
+      return {
+        group: 'default',
+        title: 'Expense Added',
+        type: 'success'
+      }
     } catch(error) {
-      this._vm.$notify({
-        type: 'error',
-        title: 'Error',
-        text: error.response.data
-      });
+      if (error.response.data) {
+        throw new APIException(error.response.data);
+      } else {
+        throw error;
+      }
     };
   }
 };

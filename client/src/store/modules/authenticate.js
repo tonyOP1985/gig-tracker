@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AuthenticationException } from '../../exceptions';
 
 const state = {
   user: null,
@@ -14,21 +15,20 @@ const getters = {
 const actions = {
   async registerUser({ commit }, user) {
     try {
-      let register = await axios.post('/auth/register', {
+      await axios.post('/auth/register', {
         ...user
       });
-      console.log(register);
-      this._vm.$notify({
+      return {
         type: 'success',
         title: 'Success',
         text: 'User Successfully created.'
-      });
+      }
     } catch(error) {
-      this._vm.$notify({
-        type: 'error',
-        title: 'Error',
-        text: error.response.data
-      });
+      if (error.response.data) {
+        throw new AuthenticationException(error.response.data);
+      } else {
+        throw error;
+      }
     };
   },
   async loginUser({ commit }, user) {
@@ -39,17 +39,12 @@ const actions = {
       commit('set_user', loggedInUser.data.user);
       commit('set_token', loggedInUser.data.token);
       localStorage.setItem('token', loggedInUser.data.token);
-      this._vm.$notify({
-        type: 'success',
-        title: 'Success',
-        text: loggedInUser.data.message
-      });
     } catch(error) {
-      this._vm.$notify({
-        type: 'error',
-        title: 'Error',
-        text: error.response.data
-      });
+      if (error.response.data) {
+        throw new AuthenticationException(error.response.data);
+      } else {
+        throw error;
+      }
     };
   },
   logout({ commit }) {

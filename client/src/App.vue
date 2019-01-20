@@ -1,6 +1,8 @@
 <template>
   <v-app class="white">
     <notifications 
+      group="default"
+      class="notify"
       position="bottom right"
       :duration="5000"
       :max="1"/>
@@ -63,6 +65,10 @@ export default {
   .v-btn {
     min-width: 24px;
   }
+
+  /* .notification > .notification-title {
+    font-size: 20px;
+  } */
 
   @media screen and (min-width: 959px) {
     .hamburger {

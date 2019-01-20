@@ -103,8 +103,14 @@ export default {
     }
   },
   methods: {
-    registerUser() {
-      store.dispatch('authenticate/registerUser', this.newUser);
+    async registerUser() {
+      try {
+        let newUser = await store.dispatch('authenticate/registerUser', this.newUser);
+        this.$router.push({ name: 'login' });
+        this.$notify(newUser);
+      } catch(error) {
+        this.$notify(error.notifyParams);
+      };
     }
   }
 }

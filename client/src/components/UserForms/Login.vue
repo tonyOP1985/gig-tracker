@@ -66,8 +66,13 @@ export default {
     }
   },
   methods: {
-    login() {
-      store.dispatch('authenticate/loginUser', this.user);
+    async login() {
+      try {
+        let loggedIn = await store.dispatch('authenticate/loginUser', this.user);
+        this.$router.push({ name: 'dashboard' });
+      } catch(error) {
+        this.$notify(error.notifyParams);
+      };
     }
   },
   computed: {
@@ -75,13 +80,6 @@ export default {
       return this.get_user;
     },
     ...mapGetters('authenticate', ['get_user'])
-  },
-  watch: {
-    loggedInUser(value) {
-      if (value !== null & value !== undefined) {
-        this.$router.push('/');
-      }
-    }
   }
 };
 </script>
