@@ -19,7 +19,7 @@ Vue.use(Notifications);
 // axios.interceptors.response.use((response) => {
 //   return response;
 // }, (error) => {
-//   console.log('wrong');
+//   console.log(error);
 // });
 
 // router.beforeEach((to, from, next) => {
