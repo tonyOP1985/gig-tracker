@@ -6,7 +6,8 @@
       </v-container>
     </v-layout>
     <v-divider></v-divider>
-    
+    <!-- TODO: condense both cards into v-for -->
+    <!-- TODO: Add gross income and total amount of gigs for year -->
     <v-container grid-list-md>
       <v-layout row wrap>
         <v-flex sm12 md6 class="mb-5">
@@ -46,7 +47,7 @@
                   View All Gigs
                 </v-btn>
                 <v-btn
-                    :to="{ name: 'addgig' }"
+                    :to="{ name: 'addGig' }"
                     color="primary"
                     flat>
                   Add Gig
@@ -56,7 +57,7 @@
           </v-card>
         </v-flex>
 
-
+        <!-- TODO: Add total amount spent and items purchased for current year -->
         <v-flex sm12 md6 class="mb-5">
           <v-card class="pb-3">
             <v-container>
@@ -80,9 +81,6 @@
                       <v-flex sm4 v-else-if="recentExpense.items > 1">
                         <div>{{ recentExpense.items }} items</div>
                       </v-flex>
-                      <v-flex sm4 v-else>
-                        <div>{{ recentExpense.items }} item</div>
-                      </v-flex>
                     </v-layout>
                     <router-link
                       :to="{ name: 'expense', params: {id: recentExpense.expense.id}}">
@@ -100,7 +98,7 @@
                   View All Expenses
                 </v-btn>
                 <v-btn
-                    :to="{ name: 'addexpenses' }"
+                    :to="{ name: 'addExpense' }"
                     color="primary"
                     flat>
                   Add Expense
