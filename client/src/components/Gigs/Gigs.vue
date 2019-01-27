@@ -1,18 +1,59 @@
 <template>
   <v-card>
     <v-card-title primary-title>
-      <div class="headline">Gigs</div>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" to="/addgig">
-        <v-icon class="mr-3">add</v-icon>
-        Add Gig
-      </v-btn>
+      <v-layout column>
+        <v-layout row xs12>
+          <div class="headline">Gigs</div>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" to="/addgig">
+            <v-icon class="mr-3">add</v-icon>
+            Add Gig
+          </v-btn>
+        </v-layout>
+        <v-layout>
+          <span class="subheading">Filter Gigs:</span>
+        </v-layout>
+        <v-layout wrap>
+          <v-flex xs6>
+            <v-layout>
+              <v-flex md3 sm5 xs6 d-flex class="px-1"> 
+                <v-select
+                  :items="years"
+                  label="Year"
+                  single-line>
+                </v-select>
+              </v-flex>
+              <v-flex md3 sm5 xs6 class="px-1">
+                <v-select
+                  :items="months"
+                  label="Month"
+                  single-line
+                  hide-details
+                  clearable
+                  v-model="month"
+                  @click="selectedMonth">
+                </v-select>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details>
+            </v-text-field>
+          </v-flex>
+        </v-layout>
+      </v-layout>
     </v-card-title>
     <!-- Large screens -->
     <v-data-table
         v-if="windowWidth > 959"
         :headers="headers"
         :items="get_gigs"
+        :search="search"
         disable-initial-sort>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.date }}</td>
@@ -118,6 +159,8 @@ export default {
   mixins: [windowWidth],
   data() {
     return {
+      search: '',
+      month: '',
       windowWidth: 0,
       pagination: {
         rowsPerPage: 4
@@ -130,7 +173,33 @@ export default {
         { text: 'Location', value: 'city' },
         { text: 'Mileage', value: 'mileage' },
         { text: 'Actions', sortable: false}
+      ],
+      months: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ],
+      years: [
+        2019,
+        2018,
+        2017,
+        2016,
+        2015
       ]
+    }
+  },
+  methods: {
+    selectedMonth() {
+      console.log(this.month);
     }
   },
   computed: {
