@@ -18,9 +18,13 @@
             <v-layout>
               <v-flex md3 sm5 xs6 d-flex class="px-1"> 
                 <v-select
-                  :items="years"
+                  :items="get_years"
                   label="Year"
-                  single-line>
+                  single-line
+                  clearable
+                  hide-details
+                  v-model="year"
+                  @change="selectedYear">
                 </v-select>
               </v-flex>
               <v-flex md3 sm5 xs6 class="px-1">
@@ -31,12 +35,13 @@
                   hide-details
                   clearable
                   v-model="month"
-                  @click="selectedMonth">
+                  @change="selectedMonth">
                 </v-select>
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs12 sm6>
+          <v-spacer></v-spacer>
+          <v-flex xs12 sm4 md4>
             <v-text-field
               v-model="search"
               append-icon="search"
@@ -161,6 +166,7 @@ export default {
     return {
       search: '',
       month: '',
+      year: '',
       windowWidth: 0,
       pagination: {
         rowsPerPage: 4
@@ -200,10 +206,19 @@ export default {
   methods: {
     selectedMonth() {
       console.log(this.month);
+    },
+    selectedYear() {
+      console.log(this.year);
+    },
+    filterData() {
+      console.log('filtered');
     }
   },
   computed: {
-    ...mapGetters('gigs', ['get_gigs'])
+    ...mapGetters({
+      get_gigs: 'gigs/get_gigs',
+      get_years: 'gigs/get_years'
+    })
   }
 };
 </script>

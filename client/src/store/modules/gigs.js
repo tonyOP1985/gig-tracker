@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { formatArrayDates } from '../../lib/date';
+import { formatArrayDates, reduceDates } from '../../lib/date';
 import { APIException, HTTPException } from '../../exceptions';
 
 const state = {
@@ -13,6 +13,9 @@ const getters = {
   },
   get_gig: state => {
     return state.gig;
+  },
+  get_years: (state, getters) => {
+    return reduceDates(getters.get_gigs);
   }
 };
 
