@@ -23,7 +23,7 @@
           <v-spacer></v-spacer>
           <v-flex xs12 sm4 md2>
             <v-select
-              :items="get_years"
+              :items="get_gig_years"
               label="Year"
               single-line
               clearable
@@ -175,7 +175,7 @@ export default {
   computed: {
     ...mapGetters({
       get_gigs: 'gigs/get_gigs',
-      get_years: 'years/get_years'
+      get_gig_years: 'years/get_gig_years'
     })
   }
 };
