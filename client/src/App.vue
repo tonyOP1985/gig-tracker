@@ -44,12 +44,8 @@ export default {
         }
       ]
     }
-  },
-  mounted() {
-    store.dispatch('gigs/getAllGigs');
-    store.dispatch('expenses/getAllExpenses');
   }
-}
+};
 </script>
 
 <style>

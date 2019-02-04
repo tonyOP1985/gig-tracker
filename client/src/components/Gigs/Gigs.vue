@@ -1,18 +1,46 @@
 <template>
   <v-card>
     <v-card-title primary-title>
-      <div class="headline">Gigs</div>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" to="/addgig">
-        <v-icon class="mr-3">add</v-icon>
-        Add Gig
-      </v-btn>
+      <v-layout column>
+        <v-layout row xs12>
+          <div class="headline">Gigs</div>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" to="/addgig">
+            <v-icon class="mr-3">add</v-icon>
+            Add Gig
+          </v-btn>
+        </v-layout>
+        <v-layout row wrap>
+          <v-flex xs12 sm4 md4>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details>
+            </v-text-field>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex xs12 sm4 md2>
+            <v-select
+              :items="get_years"
+              label="Year"
+              single-line
+              clearable
+              hide-details
+              v-model="year"
+              @change="selectedYear">
+            </v-select>
+          </v-flex>
+        </v-layout>
+      </v-layout>
     </v-card-title>
     <!-- Large screens -->
     <v-data-table
         v-if="windowWidth > 959"
         :headers="headers"
         :items="get_gigs"
+        :search="search"
         disable-initial-sort>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.date }}</td>
@@ -53,6 +81,7 @@
         :items="get_gigs"
         :rows-per-page-items="[4,8]"
         :pagination.sync="pagination"
+        :search="search"
         row
         wrap>
       <v-flex
@@ -118,6 +147,9 @@ export default {
   mixins: [windowWidth],
   data() {
     return {
+      search: '',
+      month: '',
+      year: '',
       windowWidth: 0,
       pagination: {
         rowsPerPage: 4
@@ -133,8 +165,18 @@ export default {
       ]
     }
   },
+  methods: {
+    selectedYear() {
+      if (this.year) {
+        store.dispatch('gigs/getAllGigs', this.year);
+      }
+    }
+  },
   computed: {
-    ...mapGetters('gigs', ['get_gigs'])
+    ...mapGetters({
+      get_gigs: 'gigs/get_gigs',
+      get_years: 'years/get_years'
+    })
   }
 };
 </script>

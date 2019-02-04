@@ -114,7 +114,7 @@ export default {
         // this.gig.user_id = this.get_user.id;
         this.gig.user_id = 13;
         let newGig = await store.dispatch('gigs/addGig', this.gig);
-        await store.dispatch('gigs/getAllGigs');
+        await store.dispatch('gigs/getAllGigs', this.createYear());
         this.reset();
         this.$router.push('/gigs');
         this.$notify(newGig);
@@ -132,6 +132,11 @@ export default {
           this.gig.state = state.abbreviation;
         }
       });
+    },
+    createYear() {
+      let date = new Date();
+      let year = date.getFullYear().toString();
+      return year;
     }
   },
   computed: {

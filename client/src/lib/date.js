@@ -10,3 +10,22 @@ export const formatArrayDates = (array) => {
   });
   return array;
 };
+
+// reduce array
+export const reduceDates = (array) => {
+  let arr = array.map((item) => {
+    let year = item.date.substring(item.date.length - 4);
+    return year;
+  });
+  return reduceArray(arr);
+};
+
+export const reduceArray = (data) => {
+  return data.reduce((accumulator, current) => {
+    const length = accumulator.length;
+    if (length === 0 || accumulator[length - 1] !== current) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+};

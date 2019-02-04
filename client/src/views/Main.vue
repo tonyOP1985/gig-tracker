@@ -85,8 +85,11 @@ export default {
     }
   },
   mounted() {
-    store.dispatch('gigs/getAllGigs');
+    let date = new Date();
+    let year = date.getFullYear().toString();
+    store.dispatch('gigs/getAllGigs', year);
     store.dispatch('expenses/getAllExpenses');
+    store.dispatch('years/getYears', '13');
   },
   methods: {
     logout() {
