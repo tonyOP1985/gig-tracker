@@ -10,37 +10,7 @@
             Add Gig
           </v-btn>
         </v-layout>
-        <v-layout>
-          <span class="subheading">Filter Gigs:</span>
-        </v-layout>
-        <v-layout wrap>
-          <v-flex xs6>
-            <v-layout>
-              <v-flex md3 sm5 xs6 d-flex class="px-1"> 
-                <v-select
-                  :items="get_years"
-                  label="Year"
-                  single-line
-                  clearable
-                  hide-details
-                  v-model="year"
-                  @change="selectedYear">
-                </v-select>
-              </v-flex>
-              <v-flex md3 sm5 xs6 class="px-1">
-                <v-select
-                  :items="months"
-                  label="Month"
-                  single-line
-                  hide-details
-                  clearable
-                  v-model="month"
-                  @change="selectedMonth">
-                </v-select>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-          <v-spacer></v-spacer>
+        <v-layout row wrap>
           <v-flex xs12 sm4 md4>
             <v-text-field
               v-model="search"
@@ -49,6 +19,18 @@
               single-line
               hide-details>
             </v-text-field>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex xs12 sm4 md2>
+            <v-select
+              :items="get_years"
+              label="Year"
+              single-line
+              clearable
+              hide-details
+              v-model="year"
+              @change="selectedYear">
+            </v-select>
           </v-flex>
         </v-layout>
       </v-layout>
@@ -99,6 +81,7 @@
         :items="get_gigs"
         :rows-per-page-items="[4,8]"
         :pagination.sync="pagination"
+        :search="search"
         row
         wrap>
       <v-flex
@@ -179,45 +162,20 @@ export default {
         { text: 'Location', value: 'city' },
         { text: 'Mileage', value: 'mileage' },
         { text: 'Actions', sortable: false}
-      ],
-      months: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ],
-      years: [
-        2019,
-        2018,
-        2017,
-        2016,
-        2015
       ]
     }
   },
   methods: {
-    selectedMonth() {
-      console.log(this.month);
-    },
     selectedYear() {
-      console.log(this.year);
-    },
-    filterData() {
-      console.log('filtered');
+      if (this.year) {
+        store.dispatch('gigs/getAllGigs', this.year);
+      }
     }
   },
   computed: {
     ...mapGetters({
       get_gigs: 'gigs/get_gigs',
-      get_years: 'gigs/get_years'
+      get_years: 'years/get_years'
     })
   }
 };

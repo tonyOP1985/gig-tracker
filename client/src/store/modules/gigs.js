@@ -2,6 +2,12 @@ import axios from 'axios';
 import { formatArrayDates, reduceDates } from '../../lib/date';
 import { APIException, HTTPException } from '../../exceptions';
 
+const gigsByYear = (gigs, year) => {
+  return gigs.filter((gig) => {
+    return gig.date.substring(gig.date.length - 4) === year;
+  });
+};
+
 const state = {
   gigs: [],
   gig: []
@@ -14,17 +20,17 @@ const getters = {
   get_gig: state => {
     return state.gig;
   },
-  get_years: (state, getters) => {
-    return reduceDates(getters.get_gigs);
+  get_years: (state) => {
+    return reduceDates(state.gigs);
   }
 };
 
 const actions = {
-  async getAllGigs({ commit, rootState }) {
-    let user = rootState.authenticate.user;
+  async getAllGigs({ commit }, year) {
+    // let user = rootState.authenticate.user;
     // TODO: Keep this two lines of code
     // replace 13 with user.id
-    let gigs = await axios.get(`/gigs/${13}`);
+    let gigs = await axios.get(`/gigs/year/${year}/13`);
     commit('set_gigs', gigs.data);
   },
   async getGig({ commit }, id) {
@@ -53,7 +59,7 @@ const actions = {
 
 const mutations = {
   set_gigs(state, data) {
-    let gigs = formatArrayDates(data.gigs);
+    let gigs = formatArrayDates(data.gigsByYear);
     state.gigs = gigs;
   },
   set_gig(state, data) {
