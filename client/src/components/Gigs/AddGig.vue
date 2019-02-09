@@ -1,17 +1,18 @@
 <template>
   <v-container>
-    <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
-      <v-card>
+    <v-flex xs12 sm8 offset-sm2 md8 offset-md2>
+      <v-card flat>
         <v-card-title>
           <h3 class="blue-text">Add New Gig</h3>
         </v-card-title>
-        <v-container>
-          <v-layout column>
-            <v-flex xs12>
+        <v-container grid-list-md>
+          <v-layout row wrap>
+            <v-flex sm6 xs12>
               <v-menu
                   v-model="gigDate"
                   :close-on-content-click="false"
                   full-width
+                  offset-y
                   max-width="290">
                 <v-text-field
                   slot="activator"
@@ -21,12 +22,13 @@
                   label="Date">
                 </v-text-field>
                 <v-date-picker
+                  no-title
                   v-model="date"
                   @change="gigDate = false">
                 </v-date-picker>
               </v-menu>
             </v-flex>
-            <v-flex xs12>
+            <v-flex sm6 xs12>
               <v-text-field
                 prefix="$"
                 v-model="amount"
@@ -34,13 +36,13 @@
                 label="Pay">
               </v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex sm4 xs6>
               <v-text-field
                 label="City"
                 v-model="gig.city">
               </v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex sm4 xs6>
               <v-combobox
                 v-model="gig.state"
                 :items="statesList"
@@ -49,20 +51,20 @@
                 clearable>
               </v-combobox>
             </v-flex>
-            <v-flex xs12>
+            <v-flex sm4 xs12>
               <v-text-field
                 label="Milage"
                 hint="Milage will be rounded up"
                 v-model="gig.mileage">
               </v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex sm6 xs12>
               <v-text-field
                 label="Band"
                 v-model="gig.band">
               </v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex sm6 xs12>
               <v-text-field
                 label="Venue"
                 v-model="gig.venue">

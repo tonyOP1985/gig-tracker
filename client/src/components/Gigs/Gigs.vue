@@ -52,7 +52,7 @@
           <v-btn
               flat
               small
-              :to="{ name: 'editGig', params: {id: props.item.id}}">
+              @click.stop="openDialog(props.item)">
             <v-icon
                 small
                 color="green"
@@ -121,7 +121,7 @@
               <v-btn
                   flat
                   color="green"
-                  :to="{ name: 'editGig', params: {id: props.item.id}}">
+                  @click.stop="openDialog(props.item)">
                 Edit
               </v-btn>
               <v-btn
@@ -133,6 +133,11 @@
         </v-card>
       </v-flex>
     </v-data-iterator>
+
+   
+    <v-dialog v-model="is_open" max-width="600px">
+      <EditGig :gig="gig"/>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -141,14 +146,20 @@ import store from '@/store';
 import { mapGetters } from 'vuex';
 import { windowWidth } from '../../mixins/windowWidth.js';
 
+import EditGig from './EditGig';
+
 export default {
   name: 'gigs',
+  components: {
+    EditGig
+  },
   mixins: [windowWidth],
   data() {
     return {
       search: '',
       month: '',
       year: '',
+      gig: null,
       windowWidth: 0,
       pagination: {
         rowsPerPage: 4
@@ -169,12 +180,20 @@ export default {
       if (this.year) {
         store.dispatch('gigs/getAllGigs', this.year);
       }
+    },
+    // getGig(id) {
+    //   store.dispatch('gigs/getGig', id);
+    // },
+    openDialog(gig) {
+      this.gig = gig;
+      store.dispatch('dialog/openDialog');
     }
   },
   computed: {
     ...mapGetters({
       get_gigs: 'gigs/get_gigs',
-      get_gig_years: 'years/get_gig_years'
+      get_gig_years: 'years/get_gig_years',
+      is_open: 'dialog/is_open'
     })
   }
 };

@@ -6,6 +6,7 @@ import expenses from './modules/expenses';
 import items from './modules/items';
 import authenticate from './modules/authenticate';
 import years from './modules/years';
+import dialog from './modules/dialog';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     expenses,
     items,
     authenticate,
-    years
+    years,
+    dialog
   }
 });
