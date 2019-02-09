@@ -88,7 +88,7 @@ export default {
     let date = new Date();
     let year = date.getFullYear().toString();
     store.dispatch('gigs/getAllGigs', year);
-    store.dispatch('expenses/getAllExpenses');
+    store.dispatch('expenses/getAllExpenses', year);
     store.dispatch('years/getYears', '13');
   },
   methods: {

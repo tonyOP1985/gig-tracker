@@ -17,11 +17,11 @@ const getters = {
 };
 
 const actions = {
-  async getAllExpenses({ commit, rootState }) {
+  async getAllExpenses({ commit, rootState }, year) {
     // let user = rootState.authenticate.user;
     // TODO: replace 13 with user.id
-    let expenses = await axios.get(`/expenses/${13}`);
-    commit('set_expenses', expenses.data);
+    let expenses = await axios.get(`/expenses/${year}/${13}`);
+    commit('set_expenses', expenses.data.expensesByYear);
   },
   getExpense({ commit }, id) {
     let expense = state.expenses.find(expense => expense.id == id);
@@ -48,7 +48,7 @@ const actions = {
 
 const mutations = {
   set_expenses(state, data) {
-    let expenses = formatArrayDates(data.expenses);
+    let expenses = formatArrayDates(data);
     state.expenses = expenses;
   },
   set_expense(state, data) {

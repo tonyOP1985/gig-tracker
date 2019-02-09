@@ -10,7 +10,7 @@ Vue.config.productionTip = false;
 
 Vue.use(Notifications);
 
-// axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = 'http://localhost:5000/api';
 
 // axios.interceptors.request.use((request) => {
 //   return request;

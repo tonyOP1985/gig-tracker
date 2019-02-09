@@ -24,23 +24,23 @@ const router = express.Router();
 
 // get gigs by year
 router.get('/year/:year/:userid', asyncMiddleWare(async(req, res) => {
-  const year = req.params.year;
-  const user_id = req.params.userid;
-  const gigs = await Gig.findAll({
-    where: {
-      user_id
-    },
-    order: [
-      ['date', 'DESC']
-    ]
-  });
-  let gigsByYear = gigs.filter((gig) => {
-    if (gig.date !== null) {
-        return gig.date.substring(0, 4) === year;
-    }
-  });
-  res.send({ gigsByYear });
-})
+    const year = req.params.year;
+    const user_id = req.params.userid;
+    const gigs = await Gig.findAll({
+      where: {
+        user_id
+      },
+      order: [
+        ['date', 'DESC']
+      ]
+    });
+    let gigsByYear = gigs.filter((gig) => {
+      if (gig.date !== null) {
+          return gig.date.substring(0, 4) === year;
+      }
+    });
+    res.send({ gigsByYear });
+  })
 );
 
 /**
