@@ -27,6 +27,33 @@ router.get('/:id', asyncMiddleWare(async(req, res) => {
   })
 );
 
+/**
+ * Get expenses by year
+ */
+router.get('/:year/:id', asyncMiddleWare(async (req, res) => {
+    let year = req.params.year;
+    let user_id = req.params.id;
+
+    const expenses = await Expense.findAll({
+      where: {
+        user_id
+      },
+      order: [
+        ['date', 'DESC']
+      ],
+      include: [{
+          model: Item,
+          as: 'items'
+      }]
+    });
+    let expensesByYear = expenses.filter((expense) => {
+      if (expense.date !== null) {
+          return expense.date.substring(0, 4) === year;
+      }
+    });
+    res.send({ expensesByYear });
+  })
+);
 
 /**
  * Add Expense

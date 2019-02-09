@@ -1,16 +1,43 @@
 <template>
   <v-card>
     <v-card-title primary-title>
-      <div class="headline">Expenses</div>
-      <v-spacer></v-spacer>
-      <v-btn to="/addexpense" color="primary">
-        <v-icon class="mr-3">add</v-icon>
-        Add Expense
-      </v-btn>
+      <v-layout column>
+        <v-layout row xs12>
+          <div class="headline">Expenses</div>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" to="/addexpense">
+            <v-icon class="mr-3">add</v-icon>
+            Add Expense
+          </v-btn>
+        </v-layout>
+        <v-layout row wrap>
+          <v-flex xs12 sm4 md4>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details>
+            </v-text-field>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex xs12 sm4 md2>
+            <v-select
+              :items="get_expense_years"
+              label="Year"
+              single-line
+              hide-details
+              v-model="year"
+              @change="selectedYear">
+            </v-select>
+          </v-flex>
+        </v-layout>
+      </v-layout>
     </v-card-title>
     <v-data-table
         :headers="headers"
         :items="get_expenses"
+        :search="search"
         disable-initial-sort>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.date }}</td>
@@ -50,6 +77,8 @@ export default {
   mixins: [windowWidth],
   data() {
     return {
+      year: '',
+      search: '',
       windowWidth: 0,
       headers: [
         { text: 'Date', value: 'date' },
@@ -59,8 +88,18 @@ export default {
       ]
     }
   },
+  methods: {
+    selectedYear() {
+      if (this.year) {
+        store.dispatch('expenses/getAllExpenses', this.year);
+      }
+    }
+  },
   computed: {
-    ...mapGetters('expenses', ['get_expenses'])
+    ...mapGetters({
+      get_expense_years: 'years/get_expense_years',
+      get_expenses: 'expenses/get_expenses'
+    })
   }
 }
 </script>

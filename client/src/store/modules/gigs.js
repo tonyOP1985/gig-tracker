@@ -2,11 +2,6 @@ import axios from 'axios';
 import { formatArrayDates, reduceDates } from '../../lib/date';
 import { APIException, HTTPException } from '../../exceptions';
 
-const gigsByYear = (gigs, year) => {
-  return gigs.filter((gig) => {
-    return gig.date.substring(gig.date.length - 4) === year;
-  });
-};
 
 const state = {
   gigs: [],

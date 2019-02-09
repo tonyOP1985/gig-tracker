@@ -19,7 +19,6 @@ const actions = {
   async getYears({ commit }, id) {
     try {
       let years = await axios.get(`/years/${id}`);
-      console.log(years.data);
       commit('set_gig_years', years.data.years.gigYears);
       commit('set_expense_years', years.data.years.expenseYears);
     } catch (error) {

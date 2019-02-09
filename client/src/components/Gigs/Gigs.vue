@@ -26,7 +26,6 @@
               :items="get_gig_years"
               label="Year"
               single-line
-              clearable
               hide-details
               v-model="year"
               @change="selectedYear">
