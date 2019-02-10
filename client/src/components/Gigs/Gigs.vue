@@ -135,7 +135,10 @@
     </v-data-iterator>
 
    
-    <v-dialog v-model="is_open" max-width="600px">
+    <v-dialog
+        v-model="is_open"
+        max-width="600px" 
+        persistent>
       <EditGig :gig="gig"/>
     </v-dialog>
   </v-card>

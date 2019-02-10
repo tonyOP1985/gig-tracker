@@ -7,7 +7,7 @@
           flat
           fab
           @click.stop="closeDialog">
-        <v-icon>clear</v-icon>
+        <v-icon color="grey lighten-1">clear</v-icon>
       </v-btn>
     </v-card-title>
     <v-container grid-list-md>
@@ -28,24 +28,25 @@
             </v-text-field>
             <v-date-picker
               no-title
-              v-model="gig.date"
+              reactive
+              v-model="date"
+              
               @change="gigDate = false">
             </v-date-picker>
           </v-menu>
         </v-flex>
         <v-flex sm6 xs12>
-          <v-text-field
+          <!-- <v-text-field
             prefix="$"
             v-model="gig.amount"
             @keypress="allowOnlyTwoDecimals"
             label="Pay">
-          </v-text-field>
+          </v-text-field> -->
         </v-flex>
         <v-flex sm4 xs6>
           <v-text-field
             label="City"
-            v-model="gig.city"
-            @input="updateGig">
+            v-model="gig.city">
           </v-text-field>
         </v-flex>
         <v-flex sm4 xs6>
@@ -86,6 +87,7 @@
 
 <script>
 import store from '@/store';
+import moment from 'moment';
 import { mapGetters, mapState } from 'vuex';
 import { states } from '../../lib/states.js';
 import { decimalMixin } from '../../mixins/allowOnlyTwoDecimals.js';
@@ -98,15 +100,29 @@ export default {
   props: ['gig'],
   data() {
     return {
-      gigDate: false
+      gigDate: false,
+      date: new Date(this.gig.date).toISOString().substr(0, 10)
     }
   },
   methods: {
     editGig() {
+      this.gig.date = moment(this.date).format('MM/DD/YYYY');
       console.log(this.gig);
     },
     closeDialog() {
       store.dispatch('dialog/closeDialog');
+    },
+    getAbbreviation() {
+      let getAbbreviation = states.find((state) => {
+        if (this.gig.state === state.abbreviation) {
+          this.gig.state = state.abbreviation;
+        }
+      });
+    }
+  },
+  computed: {
+    statesList() {
+      return states.map(state => state.abbreviation);
     }
   }
 };
