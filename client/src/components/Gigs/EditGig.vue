@@ -30,18 +30,17 @@
               no-title
               reactive
               v-model="date"
-              
               @change="gigDate = false">
             </v-date-picker>
           </v-menu>
         </v-flex>
         <v-flex sm6 xs12>
-          <!-- <v-text-field
+          <v-text-field
             prefix="$"
             v-model="gig.amount"
             @keypress="allowOnlyTwoDecimals"
             label="Pay">
-          </v-text-field> -->
+          </v-text-field>
         </v-flex>
         <v-flex sm4 xs6>
           <v-text-field
