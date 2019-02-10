@@ -5,7 +5,7 @@ import { APIException, HTTPException } from '../../exceptions';
 
 const state = {
   gigs: [],
-  gig: []
+  gig: {}
 };
 
 const getters = {
@@ -28,9 +28,11 @@ const actions = {
     let gigs = await axios.get(`/gigs/year/${year}/13`);
     commit('set_gigs', gigs.data);
   },
-  async getGig({ commit }, id) {
-    let gig = await axios.get(`/gigs/${id}`);
-    commit('set_gig', gig.data);
+  async getGig({ commit, getters }, id) {
+    // let gig = await axios.get(`/gigs/${id}`);
+    // commit('set_gig', gig.data);
+    let gig = getters.get_gigs.find(gig => gig.id === id);
+    commit('set_gig', gig);
   },
   async addGig({ commit }, gig) {
     try {
@@ -49,6 +51,9 @@ const actions = {
         throw error;
       }  
     };
+  },
+  updateGig({ commit }, gig) {
+    commit('update_gig', gig);
   }
 };
 
@@ -59,6 +64,9 @@ const mutations = {
   },
   set_gig(state, data) {
     state.gig = data;
+  },
+  update_gig(state, gig) {
+    state.gig = gig;
   }
 };
 

@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-flex sm12 md10 offset-md1 lg8 offset-lg2>
-      <v-card>
+      <v-card flat>
         <v-card-title>Add New Expense</v-card-title>
         <v-container>
           <v-form
@@ -14,6 +14,7 @@
                     v-model="purchaseDate"
                     :close-on-content-click="false"
                     full-width
+                    offset-y
                     max-width="290">
                   <v-text-field
                     slot="activator"
@@ -24,6 +25,7 @@
                     label="Date">
                   </v-text-field>
                   <v-date-picker
+                    no-title
                     v-model="date"
                     @change="purchaseDate = false">
                   </v-date-picker>
