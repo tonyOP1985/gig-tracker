@@ -8,7 +8,7 @@
     <v-divider></v-divider>
     <!-- TODO: condense both cards into v-for -->
     <!-- TODO: Add gross income and total amount of gigs for year -->
-    <v-container grid-list-md>
+    <v-container grid-list-md v-if="this.get_gigs && get_expenses">
       <v-layout row wrap>
         <v-flex sm12 md6 class="mb-5">
           <v-card class="pb-3">
@@ -125,12 +125,16 @@ export default {
   },
  computed: {
    recentGig() {
-     return this.get_gigs[0];
+     if (this.get_gigs !== null || this.get_gigs !== undefined) {
+       return this.get_gigs[0];
+     }
    },
    recentExpense() {
-     return {
-       expense: this.get_expenses[0],
-       items: this.get_expenses[0].items.length
+     if (this.get_expenses) {
+       return {
+        expense: this.get_expenses[0],
+        items: this.get_expenses[0].items.length
+      }
      }
    },
     ...mapGetters({

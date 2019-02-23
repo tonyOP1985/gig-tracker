@@ -52,7 +52,7 @@
           <v-btn
               flat
               small
-              @click.stop="openDialog(props.item)">
+              @click="getGig(props.item.id)">
             <v-icon
                 small
                 color="green"
@@ -121,7 +121,7 @@
               <v-btn
                   flat
                   color="green"
-                  @click.stop="openDialog(props.item)">
+                  @click="getGig(props.item.id)">
                 Edit
               </v-btn>
               <v-btn
@@ -133,29 +133,18 @@
         </v-card>
       </v-flex>
     </v-data-iterator>
-
-   
-    <v-dialog
-        v-model="is_open"
-        max-width="600px" 
-        persistent>
-      <EditGig :gig="gig"/>
-    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import store from '@/store';
+import moment from 'moment';
 import { mapGetters } from 'vuex';
 import { windowWidth } from '../../mixins/windowWidth.js';
-
-import EditGig from './EditGig';
+import { formatDate } from '../../mixins/formatDate.js';
 
 export default {
   name: 'gigs',
-  components: {
-    EditGig
-  },
   mixins: [windowWidth],
   data() {
     return {
@@ -163,6 +152,7 @@ export default {
       month: '',
       year: '',
       gig: null,
+      date: null,
       windowWidth: 0,
       pagination: {
         rowsPerPage: 4
@@ -184,19 +174,19 @@ export default {
         store.dispatch('gigs/getAllGigs', this.year);
       }
     },
-    // getGig(id) {
-    //   store.dispatch('gigs/getGig', id);
-    // },
-    openDialog(gig) {
-      this.gig = gig;
-      store.dispatch('dialog/openDialog');
+    async getGig(id) {
+      try {
+        await store.dispatch('gigs/getGig', id);
+        this.$router.push({ name: 'editGig', params: { id } });
+      } catch (error) {
+        console.log('getGig error', error);
+      }
     }
   },
   computed: {
     ...mapGetters({
       get_gigs: 'gigs/get_gigs',
-      get_gig_years: 'years/get_gig_years',
-      is_open: 'dialog/is_open'
+      get_gig_years: 'years/get_gig_years'
     })
   }
 };

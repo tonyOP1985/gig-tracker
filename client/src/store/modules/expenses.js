@@ -3,8 +3,8 @@ import { formatArrayDates } from '../../lib/date';
 import { APIException } from '../../exceptions';
 
 const state = {
-  expenses: [],
-  expense: []
+  expenses: null,
+  expense: null
 };
 
 const getters = {
