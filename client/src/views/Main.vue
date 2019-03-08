@@ -84,12 +84,16 @@ export default {
       ]
     }
   },
-  mounted() {
-    let date = new Date();
-    let year = date.getFullYear().toString();
-    store.dispatch('gigs/getAllGigs', year);
-    store.dispatch('expenses/getAllExpenses', year);
-    store.dispatch('years/getYears', '13');
+  async mounted() {
+    try {
+      let date = new Date();
+      let year = date.getFullYear().toString();
+      await store.dispatch('gigs/getAllGigs', year);
+      await store.dispatch('expenses/getAllExpenses', year);
+      await store.dispatch('years/getYears', '13');
+    } catch (error) {
+      console.log('Main.vue error', error);
+    }
   },
   methods: {
     logout() {

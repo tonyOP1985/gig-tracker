@@ -1,93 +1,90 @@
 <template>
-  <v-card flat>
-    <v-card-title>
-      <h3 class="blue-text">Edit Gig</h3>
-      <v-spacer></v-spacer>
-      <v-btn
-          flat
-          fab
-          @click.stop="closeDialog">
-        <v-icon color="grey lighten-1">clear</v-icon>
-      </v-btn>
-    </v-card-title>
-    <v-container grid-list-md>
-      <v-layout row wrap>
-        <v-flex sm6 xs12>
-          <v-menu
-              v-model="gigDate"
-              :close-on-content-click="false"
-              full-width
-              offset-y
-              max-width="290">
-            <v-text-field
-              slot="activator"
-              :value="formattedDate"
-              clearable
-              readonly
-              label="Date">
-            </v-text-field>
-            <v-date-picker
-              no-title
-              reactive
-              v-model="date"
-              @change="gigDate = false">
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
-        <v-flex sm6 xs12>
-          <v-text-field
-            prefix="$"
-            v-model="gig.amount"
-            @keypress="allowOnlyTwoDecimals"
-            label="Pay">
-          </v-text-field>
-        </v-flex>
-        <v-flex sm4 xs6>
-          <v-text-field
-            label="City"
-            v-model="gig.city">
-          </v-text-field>
-        </v-flex>
-        <v-flex sm4 xs6>
-          <v-combobox
-            v-model="gig.state"
-            :items="statesList"
-            @change="getAbbreviation"
-            label="State"
-            clearable>
-          </v-combobox>
-        </v-flex>
-        <v-flex sm4 xs12>
-          <v-text-field
-            label="Milage"
-            hint="Milage will be rounded up"
-            v-model="gig.mileage">
-          </v-text-field>
-        </v-flex>
-        <v-flex sm6 xs12>
-          <v-text-field
-            label="Band"
-            v-model="gig.band">
-          </v-text-field>
-        </v-flex>
-        <v-flex sm6 xs12>
-          <v-text-field
-            label="Venue"
-            v-model="gig.venue">
-          </v-text-field>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block color="primary" @click="editGig">Submit</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-card>
+  <v-layout justify-center>
+    <v-flex xs12 sm9 md7>
+      <v-card-title>
+        <h3 class="blue-text">Edit Gig</h3>
+        <v-spacer></v-spacer>
+      </v-card-title>
+      <v-container grid-list-md>
+        <v-form @submit.prevent="updateGig(gig)">
+          <v-layout row wrap>
+            <v-flex sm6 xs12>
+              <v-menu
+                  v-model="gigDate"
+                  :close-on-content-click="false"
+                  full-width
+                  offset-y
+                  max-width="290">
+                <v-text-field
+                  slot="activator"
+                  :value="formattedDate"
+                  clearable
+                  readonly
+                  label="Date">
+                </v-text-field>
+                <v-date-picker
+                  no-title
+                  reactive
+                  v-model="date"
+                  @change="gigDate = false">
+                </v-date-picker>
+              </v-menu>
+            </v-flex>
+            <v-flex sm6 xs12>
+              <v-text-field
+                prefix="$"
+                :value="gig.pay"
+                label="Pay">
+              </v-text-field>
+            </v-flex>
+            <v-flex sm4 xs6>
+              <v-text-field
+                label="City"
+                :value="gig.city">
+              </v-text-field>
+            </v-flex>
+            <v-flex sm4 xs6>
+              <v-combobox
+                :value="gig.state"
+                :items="statesList"
+                @change="getAbbreviation"
+                label="State"
+                clearable>
+              </v-combobox>
+            </v-flex>
+            <v-flex sm4 xs12>
+              <v-text-field
+                label="Milage"
+                hint="Milage will be rounded up"
+                :value="gig.mileage">
+              </v-text-field>
+            </v-flex>
+            <v-flex sm6 xs12>
+              <v-text-field
+                label="Band"
+                :value="gig.band">
+              </v-text-field>
+            </v-flex>
+            <v-flex sm6 xs12>
+              <v-text-field
+                label="Venue"
+                :value="gig.venue">
+              </v-text-field>
+            </v-flex>
+            <v-flex xs12>
+              <v-btn block color="primary" type="submit">Save</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-form>
+      </v-container>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
 import store from '@/store';
 import moment from 'moment';
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import { states } from '../../lib/states.js';
 import { decimalMixin } from '../../mixins/allowOnlyTwoDecimals.js';
 import { reset } from '../../mixins/reset.js'
@@ -96,20 +93,24 @@ import { formatDate } from '../../mixins/formatDate.js';
 export default {
   name: 'editGig',
   mixins: [decimalMixin, reset, formatDate],
-  props: ['gig'],
   data() {
     return {
       gigDate: false,
-      date: new Date(this.gig.date).toISOString().substr(0, 10)
+      date: null
     }
   },
+  created() {
+    this.date = this.gig.date;
+  },
   methods: {
-    editGig() {
-      this.gig.date = moment(this.date).format('MM/DD/YYYY');
-      console.log(this.gig);
-    },
-    closeDialog() {
-      store.dispatch('dialog/closeDialog');
+    async updateGig(gig) {
+      try {
+        gig.date = this.date;
+        await store.dispatch('gigs/updateGig', gig);
+        this.$router.push({ name: 'gigs' });
+      } catch (error) {
+        console.log('error', error);
+      }
     },
     getAbbreviation() {
       let getAbbreviation = states.find((state) => {
@@ -122,7 +123,10 @@ export default {
   computed: {
     statesList() {
       return states.map(state => state.abbreviation);
-    }
+    },
+    ...mapGetters({
+      gig: 'gigs/get_gig'
+    })
   }
 };
 </script>

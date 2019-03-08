@@ -10,7 +10,7 @@ const validateGig = (gig) => {
     city: Joi.string().min(1).max(255).error(() => 'City is required.'),
     state: Joi.string().min(1).max(255).error(() => 'State is required.'),
     user_id: Joi.number().required()
-  });
+  }).unknown();
 
   return Joi.validate(gig, schema);
 };

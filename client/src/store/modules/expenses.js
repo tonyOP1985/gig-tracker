@@ -4,12 +4,15 @@ import { APIException } from '../../exceptions';
 
 const state = {
   expenses: [],
-  expense: []
+  expense: {}
 };
 
 const getters = {
   get_expenses: state => {
-    return state.expenses;
+    if (state.expenses) {
+      let expenses = formatArrayDates(state.expenses);
+      return expenses;
+    }
   },
   get_expense: state => {
     return state.expense;
@@ -18,14 +21,18 @@ const getters = {
 
 const actions = {
   async getAllExpenses({ commit, rootState }, year) {
-    // let user = rootState.authenticate.user;
+    try {
+      // let user = rootState.authenticate.user;
     // TODO: replace 13 with user.id
-    let expenses = await axios.get(`/expenses/${year}/${13}`);
-    commit('set_expenses', expenses.data.expensesByYear);
+      let expenses = await axios.get(`/expenses/${year}/${13}`);
+      commit('set_expenses', expenses.data.expensesByYear);
+    } catch (error) {
+      console.log('expenses error', error);
+    }
   },
-  getExpense({ commit }, id) {
-    let expense = state.expenses.find(expense => expense.id == id);
-    commit('set_expense', expense);
+  async getExpense({ commit }, id) {
+    let expense = await axios.get(`/expenses/${id}`);
+    commit('set_expense', expense.data);
   },
   async addExpense({ dispatch }, payload) {
     try {
@@ -48,8 +55,9 @@ const actions = {
 
 const mutations = {
   set_expenses(state, data) {
-    let expenses = formatArrayDates(data);
-    state.expenses = expenses;
+    // let expenses = formatArrayDates(data);
+    // state.expenses = expenses;
+    state.expenses = data;
   },
   set_expense(state, data) {
     state.expense = data;
