@@ -6,7 +6,11 @@ export const formatDate = (date) => {
 
 export const formatArrayDates = (array) => {
   array.forEach((item) => {
-    item.date = formatDate(item.date);
+    if (item === undefined) {
+      console.log('undefined');
+    } else {
+      item.date = formatDate(item.date);
+    }
   });
   return array;
 };

@@ -56,13 +56,33 @@ const actions = {
       }  
     };
   },
-  async updateGig({ commit }, gig) {
+  async updateGig(gig) {
     try {
       let id = gig.id;
       await axios.put(`/gigs/${id}`, {
         ...gig
       });
-      commit('update_gig', gig);
+      return {
+        group: 'default',
+        title: 'Gig Updated',
+        type: 'success'
+      }
+    } catch (error) {
+      if (error.response.data) {
+        throw new APIException(error.response.data);
+      } else {
+        throw error;
+      }  
+    }
+  },
+  async deleteGig(id) {
+    try {
+      await axios.delete(`/gigs/${id}`);
+      return {
+        group: 'default',
+        title: 'Gig Deleted',
+        type: 'success'
+      }
     } catch (error) {
       if (error.response.data) {
         throw new APIException(error.response.data);
@@ -79,14 +99,6 @@ const mutations = {
   },
   set_gig(state, data) {
     state.gig = data;
-  },
-  update_gig(state, updatedGig) {
-    state.gigs.find((gig, index) => {
-      if (gig.id === updatedGig.id) {
-        updatedGig.date = formatDate(updatedGig.date);
-        state.gigs[index] = updatedGig;
-      }
-    });
   }
 };
 
