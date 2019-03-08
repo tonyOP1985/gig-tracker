@@ -9,8 +9,10 @@ const state = {
 
 const getters = {
   get_gigs: state => {
-    let gigs = formatArrayDates(state.gigs);
-    return gigs;
+    if (state.gigs) {
+      let gigs = formatArrayDates(state.gigs);
+      return gigs;
+    }
   },
   get_gig: state => {
     return state.gig;
@@ -22,11 +24,15 @@ const getters = {
 
 const actions = {
   async getAllGigs({ commit }, year) {
-    // let user = rootState.authenticate.user;
-    // TODO: Keep this two lines of code
-    // replace 13 with user.id
-    let gigs = await axios.get(`/gigs/year/${year}/13`);
-    commit('set_gigs', gigs.data);
+    try {
+      // let user = rootState.authenticate.user;
+      // TODO: Keep this two lines of code
+      // replace 13 with user.id
+      let gigs = await axios.get(`/gigs/year/${year}/13`);
+      commit('set_gigs', gigs.data);
+    } catch (error) {
+      console.log('getAllGigs error', error);
+    }
   },
   async getGig({ commit }, id) {
     let gig = await axios.get(`/gigs/${id}`);

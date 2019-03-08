@@ -53,14 +53,22 @@
           </v-btn>
         </td>
         <td>
-          <v-icon
-              small
-              class="mr-2">
-            edit
-          </v-icon>
-          <v-icon small>
-            delete
-          </v-icon>
+          <v-btn small
+                 flat
+                 @click="getExpense(props.items.id)">
+            <v-icon
+                small
+                color="green"
+                class="mr-2">
+              edit
+            </v-icon>
+          </v-btn>
+          <v-btn small flat>
+            <v-icon small
+                    color="red">
+              delete
+            </v-icon>
+          </v-btn>
         </td>
       </template>
     </v-data-table>
@@ -92,6 +100,14 @@ export default {
     selectedYear() {
       if (this.year) {
         store.dispatch('expenses/getAllExpenses', this.year);
+      }
+    },
+    async getExpense(id) {
+      try {
+        await store.dispatch('expenses/getExpense', id);
+        this.$router.push({ name: 'editExpense', params: { id } });
+      } catch (error) {
+        console.log('getExpense error', error);
       }
     }
   },

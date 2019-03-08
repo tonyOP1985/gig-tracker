@@ -85,11 +85,15 @@ export default {
     }
   },
   async mounted() {
-    let date = new Date();
-    let year = date.getFullYear().toString();
-    await store.dispatch('gigs/getAllGigs', year);
-    await store.dispatch('expenses/getAllExpenses', year);
-    await store.dispatch('years/getYears', '13');
+    try {
+      let date = new Date();
+      let year = date.getFullYear().toString();
+      await store.dispatch('gigs/getAllGigs', year);
+      await store.dispatch('expenses/getAllExpenses', year);
+      await store.dispatch('years/getYears', '13');
+    } catch (error) {
+      console.log('Main.vue error', error);
+    }
   },
   methods: {
     logout() {

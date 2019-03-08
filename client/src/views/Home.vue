@@ -1,4 +1,5 @@
 <template>
+<!-- TODO: refactor this whole component!!!!! -->
   <div>
     <v-layout>
       <v-container>
@@ -8,7 +9,7 @@
     <v-divider></v-divider>
     <!-- TODO: condense both cards into v-for -->
     <!-- TODO: Add gross income and total amount of gigs for year -->
-    <v-container grid-list-md v-if="this.get_gigs && get_expenses">
+    <v-container grid-list-md>
       <v-layout row wrap>
         <v-flex sm12 md6 class="mb-5">
           <v-card class="pb-3">
@@ -58,7 +59,7 @@
         </v-flex>
 
         <!-- TODO: Add total amount spent and items purchased for current year -->
-        <v-flex sm12 md6 class="mb-5">
+        <!-- <v-flex sm12 md6 class="mb-5">
           <v-card class="pb-3">
             <v-container>
               <v-card-title>
@@ -106,7 +107,7 @@
               </v-card-actions>
             </v-container>
           </v-card>
-        </v-flex>
+        </v-flex> -->
       </v-layout>
     </v-container>
   </div>
@@ -120,28 +121,34 @@ export default {
   name: 'home',
   data() {
     return {
-      userName: 'Juvia'
+      userName: 'Juvia',
+      recentGig: null,
+      recentExpense: null
     }
   },
- computed: {
-   recentGig() {
-     if (this.get_gigs !== null || this.get_gigs !== undefined) {
-       return this.get_gigs[0];
-     }
-   },
-   recentExpense() {
-     if (this.get_expenses) {
-       return {
-        expense: this.get_expenses[0],
-        items: this.get_expenses[0].items.length
-      }
-     }
-   },
-    ...mapGetters({
-      get_gigs: 'gigs/get_gigs',
-      get_expenses: 'expenses/get_expenses'
-    })
+  created() {
+    this.recentGig = store.getters['gigs/get_gigs'][0];
+    this.recentExpense = store.getters['expenses/get_expenses'][0];
   }
+  // computed: {
+  //   recentGig() {
+  //     if (this.get_gigs !== null || this.get_gigs !== undefined) {
+  //       return this.get_gigs[0];
+  //     }
+  //   },
+  //   recentExpense() {
+  //     if (this.get_expenses) {
+  //       return {
+  //         expense: this.get_expenses[0],
+  //         items: this.get_expenses[0].items.length
+  //       }
+  //     }
+  //   },
+  //   ...mapGetters({
+  //     get_gigs: 'gigs/get_gigs',
+  //     get_expenses: 'expenses/get_expenses'
+  //   })
+  // }
 }
 </script>
 

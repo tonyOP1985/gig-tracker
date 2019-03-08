@@ -5,8 +5,8 @@ export const formatDate = (date) => {
 };
 
 export const formatArrayDates = (array) => {
-  array.forEach((arr) => {
-    arr.date = formatDate(arr.date);
+  array.forEach((item) => {
+    item.date = formatDate(item.date);
   });
   return array;
 };
