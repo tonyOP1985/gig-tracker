@@ -105,11 +105,21 @@ export default {
   methods: {
     async updateGig(gig) {
       try {
+        let date = new Date();
+        let year = date.getFullYear().toString();
+
         gig.date = this.date;
-        await store.dispatch('gigs/updateGig', gig);
+        let updatedGig = await store.dispatch('gigs/updateGig', gig);
+        
+        await store.dispatch('gigs/getAllGigs', year);
         this.$router.push({ name: 'gigs' });
+        this.$notify(updatedGig);
       } catch (error) {
-        console.log('error', error);
+        if (error.notifyParams) {
+          this.$notify(error.notifyParams);
+        } else {
+          throw error;
+        }
       }
     },
     getAbbreviation() {

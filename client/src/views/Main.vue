@@ -86,6 +86,7 @@ export default {
   },
   async mounted() {
     try {
+      // TODO: Place current year in one location
       let date = new Date();
       let year = date.getFullYear().toString();
       await store.dispatch('gigs/getAllGigs', year);

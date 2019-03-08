@@ -65,7 +65,8 @@
               small>
             <v-icon
                 small
-                color="red">
+                color="red"
+                @click="deleteGig(props.item.id)">
               delete
             </v-icon>
           </v-btn>
@@ -126,7 +127,8 @@
               </v-btn>
               <v-btn
                   flat
-                  color="red">
+                  color="red"
+                  @click="deleteGig(props.item.id)">
                 Delete
               </v-btn>
             </v-card-actions>
@@ -180,6 +182,19 @@ export default {
         this.$router.push({ name: 'editGig', params: { id } });
       } catch (error) {
         console.log('getGig error', error);
+      }
+    },
+    async deleteGig(id) {
+      try {
+        let gig = await store.dispatch('gigs/deleteGig', id);
+        await store.dispatch('gigs/getAllGigs', 2019);
+        this.$notify(gig);
+      } catch (error) {
+        if (error.notifyParams) {
+          this.$notify(error.notifyParams);
+        } else {
+          throw error;
+        }
       }
     }
   },
