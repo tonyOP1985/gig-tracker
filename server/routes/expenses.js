@@ -28,6 +28,26 @@ router.get('/:id', asyncMiddleWare(async(req, res) => {
 );
 
 /**
+ * Get single Expense by id
+ */
+router.get('/expense/:id', asyncMiddleWare(async(req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    const expense = await Expense.findById(id, {
+      include: [
+        {
+          model: Item,
+          as: 'items'
+        }
+      ]
+    });
+    if (!expense) return res.status(400).send({ error: 'No expense found' });
+
+    res.send(expense);
+  })
+);
+
+/**
  * Get expenses by year
  */
 router.get('/:year/:id', asyncMiddleWare(async (req, res) => {
@@ -87,29 +107,10 @@ router.post('/items', asyncMiddleWare(async(req, res) => {
 );
 
 /**
- * Get single Expense by id
- */
-router.get('/:id', asyncMiddleWare(async(req, res) => {
-    const id = parseInt(req.params.id);
-
-    const expense = await Expense.findById(id, {
-      include: [
-        {
-          model: Item,
-          as: 'items'
-        }
-      ]
-    });
-    if (!expense) return res.status(400).send({ error: 'No expense found' });
-
-    res.send(expense);
-  })
-);
-
-/**
  * Update expense
  */
 router.put('/:id', asyncMiddleWare(async(req, res) => {
+    console.log(req.body);
     const { error } = validateExpenseWithItems(req.body);
     if (error) return res.status(400).send(error.details[0].message);  
   
@@ -124,7 +125,6 @@ router.put('/:id', asyncMiddleWare(async(req, res) => {
     if (!expense) return res.status(400).send({ error: 'No expense found' });
 
     const updatedExpense = { ...req.body };
-
     await expense.update(updatedExpense, {
       include: [{
         model: Item,

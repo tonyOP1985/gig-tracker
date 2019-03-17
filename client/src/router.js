@@ -9,6 +9,7 @@ import Expense from './components/Expenses/Expense.vue';
 import AddGig from './components/Gigs/AddGig.vue';
 import EditGig from './components/Gigs/EditGig.vue';
 import AddExpense from './views/AddExpense.vue';
+import EditExpense from './components/Expenses/EditExpenses/EditExpense.vue';
 import Auth from './views/Auth.vue';
 import Login from './components/UserForms/Login.vue';
 import Register from './components/UserForms/Register.vue';
@@ -93,6 +94,11 @@ export default new Router({
           path: '/addexpense',
           name: 'addExpense',
           component: AddExpense
+        },
+        {
+          path: '/editexpense/:id',
+          name: 'editExpense',
+          component: EditExpense
         }
       ]
     }

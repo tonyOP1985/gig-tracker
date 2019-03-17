@@ -55,7 +55,7 @@
         <td>
           <v-btn small
                  flat
-                 @click="getExpense(props.items.id)">
+                 @click="getExpense(props.item.id)">
             <v-icon
                 small
                 color="green"
@@ -114,7 +114,8 @@ export default {
   computed: {
     ...mapGetters({
       get_expense_years: 'years/get_expense_years',
-      get_expenses: 'expenses/get_expenses'
+      get_expenses: 'expenses/get_expenses',
+      print: 'expenses/get_print'
     })
   }
 }

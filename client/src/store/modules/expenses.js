@@ -3,8 +3,8 @@ import { formatArrayDates } from '../../lib/date';
 import { APIException } from '../../exceptions';
 
 const state = {
-  expenses: [],
-  expense: {}
+  expenses: null,
+  expense: null
 };
 
 const getters = {
@@ -31,8 +31,12 @@ const actions = {
     }
   },
   async getExpense({ commit }, id) {
-    let expense = await axios.get(`/expenses/${id}`);
-    commit('set_expense', expense.data);
+    try {
+      let expense = await axios.get(`/expenses/expense/${id}`);
+      commit('set_expense', expense.data);
+    } catch (error) {
+      console.log('getExpense error', error);
+    }
   },
   async addExpense({ dispatch }, payload) {
     try {

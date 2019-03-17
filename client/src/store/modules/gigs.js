@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { formatArrayDates, reduceDates, formatDate } from '../../lib/date';
+import { formatArrayDates, reduceDates } from '../../lib/date';
 import { APIException, HTTPException } from '../../exceptions';
 
 const state = {
-  gigs: [],
-  gig: {}
+  gigs: null,
+  gig: null
 };
 
 const getters = {
@@ -56,7 +56,7 @@ const actions = {
       }  
     };
   },
-  async updateGig(gig) {
+  async updateGig({ commit }, gig) {
     try {
       let id = gig.id;
       await axios.put(`/gigs/${id}`, {
@@ -75,7 +75,7 @@ const actions = {
       }  
     }
   },
-  async deleteGig(id) {
+  async deleteGig({ commit }, id) {
     try {
       await axios.delete(`/gigs/${id}`);
       return {
