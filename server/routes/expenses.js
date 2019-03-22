@@ -23,7 +23,7 @@ router.get('/:id', asyncMiddleWare(async(req, res) => {
         }
       ]
     })
-    res.send({ expenses });
+    res.send(expenses);
   })
 );
 
@@ -50,9 +50,9 @@ router.get('/expense/:id', asyncMiddleWare(async(req, res) => {
 /**
  * Get expenses by year
  */
-router.get('/:year/:id', asyncMiddleWare(async (req, res) => {
-    let year = req.params.year;
-    let user_id = req.params.id;
+router.get('/', asyncMiddleWare(async (req, res) => {
+    let year = req.query.year;
+    let user_id = req.query.userid;
 
     const expenses = await Expense.findAll({
       where: {
@@ -71,7 +71,7 @@ router.get('/:year/:id', asyncMiddleWare(async (req, res) => {
           return expense.date.substring(0, 4) === year;
       }
     });
-    res.send({ expensesByYear });
+    res.send(expensesByYear);
   })
 );
 
