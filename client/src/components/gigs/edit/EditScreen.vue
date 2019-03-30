@@ -4,6 +4,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+//  This is a test to get Git Working again
 
 import PostForm from './PostForm';
 
