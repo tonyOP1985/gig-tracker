@@ -3,25 +3,24 @@
     <v-flex sm12 md12 lg8 offset-lg2 class="mb-5">
       <v-card class="pb-3">
         <v-card-title primnary-title>
-          <v-layout>
-            <v-flex md6>
-              <h3 class="blue-text">Date of purchase</h3>
-              <h2 class="display-1 mt-3">{{ get_expense.date }}</h2>
-            </v-flex>
-            <v-flex md7>
-              <h3 class="blue-text">Purchase total</h3>
-              <h2 class="display-1 mt-3">{{ get_expense.total }}</h2>
-            </v-flex>
-            <v-flex md3 align-self-start>
-              <v-btn to="/expenses" color="primary">
-                Return to Expenses
-              </v-btn>
+          <v-layout wrap>
+            <v-flex sm8 xs12 order-xs2>
+              <v-layout>
+                <v-flex>
+                  <h3 class="blue-text">Date of purchase</h3>
+                  <h2 class="mt-3">{{ expense.date }}</h2>
+                </v-flex>
+                <v-flex>
+                  <h3 class="blue-text">Purchase total</h3>
+                  <h2 class="mt-3">{{ expense.total }}</h2>
+                </v-flex>
+              </v-layout>
             </v-flex>
           </v-layout>
         </v-card-title>
         <v-data-table
             :headers="headers"
-            :items="get_expense.items"
+            :items="expense.items"
             hide-actions>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.item }}</td>
@@ -45,11 +44,9 @@
 </template>
 
 <script>
-import store from '@/store';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'expense',
   data() {
     return {
       headers: [
@@ -60,18 +57,11 @@ export default {
       ]
     }
   },
-  beforeRouteEnter(to, from, next) {
-    store.dispatch('expenses/getExpense', to.params.id);
-    next();
-  },
-  updated() {
-    store.dispatch('expenses/getExpense', this.$route.params.id);
-  },
-  created() {
-    store.dispatch('expenses/getExpense', this.$route.params.id);
-  },
+
   computed: {
-    ...mapGetters('expenses', ['get_expense']),
+    ...mapGetters({
+      expense: 'expense/expense'
+    })
   }
 }
 </script>

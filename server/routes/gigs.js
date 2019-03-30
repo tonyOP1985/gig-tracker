@@ -1,45 +1,58 @@
 const express = require('express');
 const { Gig } = require('../models');
 const { validateGig } = require('../Validation/validation');
-const { reduceDates } = require('../utils/reduceGigs');
 const asyncMiddleWare = require('../middleware/async');
 
 const router = express.Router();
 
-/**
- * GET gigs listing
- */
-// router.get('/:userid', asyncMiddleWare(async(req, res) => {
-//     const gigs = await Gig.findAll({
-//       where: {
-//         user_id: req.params.userid
-//       },
-//       order: [
-//         ['date', 'DESC']
-//       ]
-//     })
-//     res.send({ gigs });
-//   })
-// );
-
 // get gigs by year
-router.get('/year/:year/:userid', asyncMiddleWare(async(req, res) => {
-    const year = req.params.year;
-    const user_id = req.params.userid;
-    const gigs = await Gig.findAll({
-      where: {
-        user_id
-      },
-      order: [
-        ['date', 'DESC']
-      ]
-    });
-    let gigsByYear = gigs.filter((gig) => {
-      if (gig.date !== null) {
+router.get('/', asyncMiddleWare(async(req, res) => {
+    const year = req.query.year;
+    const user_id = req.query.userid;
+    const state = req.query.state;
+
+    if (year && state && user_id) {
+      const gigs = await Gig.findAll({
+        where: {
+          state,
+          user_id
+        },
+        order: [
+          ['date', 'DESC']
+        ]
+      });
+      let gigsByYear = gigs.filter((gig) => {
+        if (gig.date !== null) {
           return gig.date.substring(0, 4) === year;
-      }
-    });
-    res.send({ gigsByYear });
+        }
+      });
+      res.send(gigsByYear);
+    } else if (year && user_id) {
+      const gigs = await Gig.findAll({
+        where: {
+          user_id
+        },
+        order: [
+          ['date', 'DESC']
+        ]
+      });
+      let gigsByYear = gigs.filter((gig) => {
+        if (gig.date !== null) {
+          return gig.date.substring(0, 4) === year;
+        }
+      });
+      res.send(gigsByYear);
+    } else {
+      const gigs = await Gig.findAll({
+        where: {
+          user_id
+        },
+        order: [
+          ['date', 'DESC']
+        ]
+      });
+      res.send(gigs);
+    }
   })
 );
 

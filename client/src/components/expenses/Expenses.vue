@@ -23,7 +23,7 @@
           <v-spacer></v-spacer>
           <v-flex xs12 sm4 md2>
             <v-select
-              :items="get_expense_years"
+              :items="years"
               label="Year"
               single-line
               hide-details
@@ -36,7 +36,7 @@
     </v-card-title>
     <v-data-table
         :headers="headers"
-        :items="get_expenses"
+        :items="expenses"
         :search="search"
         disable-initial-sort>
       <template slot="items" slot-scope="props">
@@ -55,7 +55,7 @@
         <td>
           <v-btn small
                  flat
-                 @click="getExpense(props.items.id)">
+                 @click="getExpense(props.item.id)">
             <v-icon
                 small
                 color="green"
@@ -76,13 +76,12 @@
 </template>
 
 <script>
-import store from '@/store';
 import { mapGetters } from 'vuex';
 import { windowWidth } from '../../mixins/windowWidth.js';
 
 export default {
-  name: 'expenses',
   mixins: [windowWidth],
+
   data() {
     return {
       year: '',
@@ -96,26 +95,40 @@ export default {
       ]
     }
   },
+
   methods: {
     selectedYear() {
-      if (this.year) {
-        store.dispatch('expenses/getAllExpenses', this.year);
+      try {
+        // NOTE: payload will be changed out before end of development
+        let payload = {
+          userid: 13,
+          year: this.year
+        };
+        this.$store.dispatch('expense/initExpenses', payload);
+      } catch(error) {
+        if (error.notifyParams) {
+          this.$notify(error.notifyParams);
+        } else {
+          throw error;
+        }
       }
     },
+  
     async getExpense(id) {
       try {
-        await store.dispatch('expenses/getExpense', id);
-        this.$router.push({ name: 'editExpense', params: { id } });
-      } catch (error) {
-        console.log('getExpense error', error);
+        await this.$store.dispatch('expense/expense', id);
+        this.$router.push({ name: 'expense' });
+      } catch(error) {
+        console.log('expense error', error);
       }
     }
   },
+
   computed: {
     ...mapGetters({
-      get_expense_years: 'years/get_expense_years',
-      get_expenses: 'expenses/get_expenses'
+      expenses: 'expense/expenses',
+      years: 'expense_years'
     })
   }
-}
+};
 </script>

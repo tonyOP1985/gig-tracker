@@ -1,9 +1,16 @@
 const express = require('express');
 const { Gig, Expense } = require('../models');
-const { reduceDates } = require('../utils/reduceGigs');
 const asyncMiddleWare = require('../middleware/async');
 
 const router = express.Router();
+
+const reduceDates = (array) => {
+  let arr = array.map((item) => {
+    let year = item.date.substring(0, 4);
+    return year;
+  });
+  return [...new Set(arr)];
+};
 
 // get years of gigs
 router.get('/:userid', asyncMiddleWare(async(req, res) => {
@@ -35,28 +42,7 @@ router.get('/:userid', asyncMiddleWare(async(req, res) => {
     expenseYears
   };
 
-  res.send({ years });
+  res.send(years);
 }));
-
-// get gigs by year
-// router.get('/:year/:userid', asyncMiddleWare(async(req, res) => {
-//   const year = req.params.year;
-//   const user_id = req.params.userid;
-//   const gigs = await Gig.findAll({
-//     where: {
-//       user_id
-//     },
-//     order: [
-//       ['date', 'DESC']
-//     ]
-//   });
-//   let gigsByYear = gigs.filter((gig) => {
-//     if (gig.date !== null) {
-//         return gig.date.substring(0, 4) === year;
-//     }
-//   });
-//   res.send({ gigsByYear });
-// })
-// );
 
 module.exports = router;

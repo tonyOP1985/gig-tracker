@@ -6,34 +6,12 @@ const asyncMiddleWare = require('../middleware/async');
 router = express.Router();
 
 /**
- * Get all Expenses
- */
-router.get('/:id', asyncMiddleWare(async(req, res) => {
-    const expenses = await Expense.findAll({
-      where: {
-        user_id: req.params.id
-      },
-      order: [
-        ['date', 'DESC']
-      ],
-      include: [
-        {
-          model: Item,
-          as: 'items'
-        }
-      ]
-    })
-    res.send({ expenses });
-  })
-);
-
-/**
- * Get expenses by year
- */
-router.get('/:year/:id', asyncMiddleWare(async (req, res) => {
-    let year = req.params.year;
-    let user_id = req.params.id;
-
+* Get expenses by year
+*/
+router.get('/', asyncMiddleWare(async (req, res) => {
+    let year = req.query.year;
+    let user_id = req.query.userid;
+    
     const expenses = await Expense.findAll({
       where: {
         user_id
@@ -51,7 +29,49 @@ router.get('/:year/:id', asyncMiddleWare(async (req, res) => {
           return expense.date.substring(0, 4) === year;
       }
     });
-    res.send({ expensesByYear });
+    res.send(expensesByYear);
+  })
+);
+
+/**
+ * Get all Expenses
+ */
+// router.get('/:id', asyncMiddleWare(async(req, res) => {
+//     const expenses = await Expense.findAll({
+//       where: {
+//         user_id: req.params.id
+//       },
+//       order: [
+//         ['date', 'DESC']
+//       ],
+//       include: [
+//         {
+//           model: Item,
+//           as: 'items'
+//         }
+//       ]
+//     })
+//     res.send(expenses);
+//   })
+// );
+
+/**
+ * Get single Expense by id
+ */
+router.get('/expense/:id', asyncMiddleWare(async(req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    const expense = await Expense.findById(id, {
+      include: [
+        {
+          model: Item,
+          as: 'items'
+        }
+      ]
+    });
+    if (!expense) return res.status(400).send({ error: 'No expense found' });
+
+    res.send(expense);
   })
 );
 
@@ -87,29 +107,10 @@ router.post('/items', asyncMiddleWare(async(req, res) => {
 );
 
 /**
- * Get single Expense by id
- */
-router.get('/:id', asyncMiddleWare(async(req, res) => {
-    const id = parseInt(req.params.id);
-
-    const expense = await Expense.findById(id, {
-      include: [
-        {
-          model: Item,
-          as: 'items'
-        }
-      ]
-    });
-    if (!expense) return res.status(400).send({ error: 'No expense found' });
-
-    res.send(expense);
-  })
-);
-
-/**
  * Update expense
  */
 router.put('/:id', asyncMiddleWare(async(req, res) => {
+    console.log(req.body);
     const { error } = validateExpenseWithItems(req.body);
     if (error) return res.status(400).send(error.details[0].message);  
   
@@ -124,7 +125,6 @@ router.put('/:id', asyncMiddleWare(async(req, res) => {
     if (!expense) return res.status(400).send({ error: 'No expense found' });
 
     const updatedExpense = { ...req.body };
-
     await expense.update(updatedExpense, {
       include: [{
         model: Item,
