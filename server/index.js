@@ -7,6 +7,7 @@ const passport = require('passport');
 
 const gigs = require('./routes/gigs');
 const years = require('./routes/years');
+const states = require('./routes/states');
 const expenses = require('./routes/expenses');
 const items = require('./routes/items');
 const users = require('./routes/users');
@@ -27,6 +28,7 @@ app.use(cors());
 
 app.use('/api/gigs', gigs);
 app.use('/api/years', years);
+app.use('/api/states', states);
 app.use('/api/expenses', expenses);
 app.use('/api/items', items);
 app.use('/api/auth', users);

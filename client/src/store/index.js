@@ -9,16 +9,24 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     gigYears: null,
-    expenseYears: null
+    expenseYears: null,
+    states: null
   },
+
   getters: {
     gig_years: state => {
       return state.gigYears;
     },
+  
     expense_years: state => {
       return state.expenseYears;
+    },
+  
+    states: state => {
+      return state.states;
     }
   },
+
   actions: {
     async getYears({ commit }, userid) {
       try {
@@ -28,16 +36,32 @@ export default new Vuex.Store({
       } catch(error) {
         console.log('getYears', error);
       }
+    },
+  
+    async states({ commit }, userid) {
+      try {
+        let states = await Axios.get(`/states/${userid}`);
+        commit('set_states', states.data);
+      } catch(error) {
+        console.log('initStates', error);
+      }
     }
   },
+
   mutations: {
     set_gig_years(state, years) {
       state.gigYears = years;
     },
+  
     set_expense_years(state, years) {
       state.expenseYears = years;
+    },
+
+    set_states(state, states) {
+      state.states = states;
     }
   },
+
   modules: {
     gig
   }

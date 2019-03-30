@@ -11,17 +11,16 @@ const getters = {
   gigs: state => {
     return state.gigs;
   },
+
   gig: state => {
     return state.gig;
   }
 };
 
 const actions = {
-  async getGigs({ commit }, payload) {
+  async queryGigs({ commit }, url) {
     try {
-      let userid = payload.userid;
-      let year = payload.year;
-      let gigs = await Axios.get(`/gigs?userid=${userid}&year=${year}`);
+      let gigs = await Axios.get(`/gigs${url}`);
       commit('set_gigs', gigs.data);
     } catch(error) {
       if (error.response.data) {
@@ -31,7 +30,8 @@ const actions = {
       }  
     }
   },
-  async getGig({ commit }, id) {
+
+  async gig({ commit }, id) {
     try {
       let gig = await Axios.get(`/gigs/${id}`);
       commit('set_gig', gig.data);
@@ -43,9 +43,10 @@ const actions = {
       }
     }
   },
-  async saveGig({ commit, state }, gig) {
+
+  async saveGig({ commit }, gig) {
     try {
-      state.gig.user_id = 13;
+      gig.user_id = 13;
       await Axios.post('/gigs', gig);
       commit('clearGig'); 
       return {
@@ -61,9 +62,9 @@ const actions = {
       }
     }
   },
-  async saveEditedGig({ commit, state }) {
+
+  async saveEditedGig({ commit }, gig) {
     try {
-      const gig = state.gig;
       await Axios.put(`/gigs/${gig.id}`, gig);
       return {
         group: 'default',
@@ -78,6 +79,7 @@ const actions = {
       }
     }
   },
+
   async deleteGig({ commit }, id) {
     try {
       await Axios.delete(`/gigs/${id}`);
@@ -94,12 +96,15 @@ const actions = {
       }
     }
   },
+
   updateGig({ commit }, payload) {
     commit('update_gig', payload);
   },
+
   setGig({ commit }, gig) {
     commit('set_gig', gig);
   },
+
   clearGig({ commit }) {
     commit('clear_gig');
   }
@@ -109,12 +114,15 @@ const mutations = {
   set_gigs(state, gigs) {
     state.gigs = gigs;
   },
+
   set_gig(state, gig) {
     state.gig = gig;
   },
+
   update_gig(state, payload) {
     set(state, payload.path, payload.newValue);
   },
+
   clear_gig(state) {
     state.gig = null;
   }

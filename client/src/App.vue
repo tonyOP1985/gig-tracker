@@ -15,12 +15,10 @@ export default {
   name: 'App',
 
   created() {
-    let payload = {
-      userid: 13,
-      year: 2019
-    };
-    this.$store.dispatch('gig/getGigs', payload);
+    let url = `?userid=${13}&year=${2019}`
+    this.$store.dispatch('gig/queryGigs', url);
     this.$store.dispatch('getYears', 13);
+    this.$store.dispatch('states', 13);
   },
 
   data () {

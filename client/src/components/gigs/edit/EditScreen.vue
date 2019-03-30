@@ -4,7 +4,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import store from '@/store';
 
 import PostForm from './PostForm';
 
@@ -14,15 +13,18 @@ export default {
   },
 
   methods: {
-    async saveGig() {
+    async saveGig(payload) {
+      // NOTE: research scope issue occuring with payload and try/catch
+      // only seems to occur with methods that catch emitted events
+      let editedGig = payload;
       try {
-        let gig = await this.$store.dispatch('gig/saveGig');
+        let gig = await this.$store.dispatch('gig/saveEditedGig', editedGig);
         // NOTE: payload will be changed out before end of development
         let payload = {
           userid: 13,
           year: 2019
         };
-        await this.$store.dispatch('gig/getGigs', payload);
+        await this.$store.dispatch('gig/initGigs', payload);
         this.$router.push({ name: 'gigs' });
         this.$notify(gig);
       } catch(error) {
@@ -34,7 +36,7 @@ export default {
       }
     }
   },
-  
+
   computed: {
     ...mapGetters({
       model: 'gig/gig'

@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="saveGig()">
+  <v-form @submit.prevent="saveGig(gig)">
     <v-container>
       <v-layout justify-center>
         <v-flex xs12 sm8 md8>
@@ -10,25 +10,39 @@
             <v-container grid-list-md>
               <v-layout row wrap>
                 <v-flex sm6 xs12>
-                  <TextField label="Date" v-model="gig.date"></TextField>
+                  <TextField label="Date" 
+                             v-model="gig.date"
+                             name="date"></TextField>
                 </v-flex>
                 <v-flex sm6 xs12>
-                  <TextField label="Pay" v-model="gig.pay"></TextField>
+                  <TextField label="Pay" 
+                             v-model="gig.pay" 
+                             name="pay"></TextField>
                 </v-flex>
                 <v-flex sm4 xs6>
-                  <TextField label="City" v-model="gig.city"></TextField>
+                  <TextField label="City" 
+                             v-model="gig.city" 
+                             name="city"></TextField>
                 </v-flex>
                 <v-flex sm4 xs6>
-                  <TextField label="State" v-model="gig.state"></TextField>
+                  <TextField label="State" 
+                             v-model="gig.state" 
+                             name="state"></TextField>
                 </v-flex>
                 <v-flex sm4 xs12>
-                  <TextField label="Mileage" v-model="gig.mileage"></TextField>
+                  <TextField label="Mileage" 
+                             v-model="gig.mileage" 
+                             name="mileage"></TextField>
                 </v-flex>
                 <v-flex sm6 xs12>
-                  <TextField label="Band" v-model="gig.band"></TextField>
+                  <TextField label="Band" 
+                             v-model="gig.band" 
+                             name="band"></TextField>
                 </v-flex>
                 <v-flex sm6 xs12>
-                  <TextField label="Venue" v-model="gig.venue"></TextField>
+                  <TextField label="Venue" 
+                             v-model="gig.venue" 
+                             name="venue"></TextField>
                 </v-flex>
                 <v-flex xs12>
                   <v-btn type="submit"
@@ -50,7 +64,7 @@
 </template>
 
 <script>
-import TextField from '../common/TextField';
+import TextField from '../../common/TextField';
 
 export default {
   components: {
@@ -74,24 +88,9 @@ export default {
   },
 
   methods: {
-    async saveGig() {
-      try {
-        let gig = await this.$store.dispatch('gig/saveEditedGig');
-        // NOTE: payload will be changed out before end of development
-        let payload = {
-          userid: 13,
-          year: 2019
-        };
-        await this.$store.dispatch('gig/getGigs', payload);
-        this.$router.push({ name: 'gigs' });
-        this.$notify(gig);
-      } catch(error) {
-        if (error.notifyParams) {
-          this.$notify(error.notifyParams);
-        } else {
-          throw error;
-        }
-      }
+    saveGig(gig) {
+      // debugger;
+      this.$emit('save-gig', gig);
     },
 
     cancel() {
