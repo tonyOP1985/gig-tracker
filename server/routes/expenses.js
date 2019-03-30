@@ -6,54 +6,26 @@ const asyncMiddleWare = require('../middleware/async');
 router = express.Router();
 
 /**
-* Get expenses by year
-*/
-router.get('/', asyncMiddleWare(async (req, res) => {
-    let year = req.query.year;
-    let user_id = req.query.userid;
-    
+ * Get all Expenses
+ */
+router.get('/:id', asyncMiddleWare(async(req, res) => {
     const expenses = await Expense.findAll({
       where: {
-        user_id
+        user_id: req.params.id
       },
       order: [
         ['date', 'DESC']
       ],
-      include: [{
+      include: [
+        {
           model: Item,
           as: 'items'
-      }]
-    });
-    let expensesByYear = expenses.filter((expense) => {
-      if (expense.date !== null) {
-          return expense.date.substring(0, 4) === year;
-      }
-    });
-    res.send(expensesByYear);
+        }
+      ]
+    })
+    res.send(expenses);
   })
 );
-
-/**
- * Get all Expenses
- */
-// router.get('/:id', asyncMiddleWare(async(req, res) => {
-//     const expenses = await Expense.findAll({
-//       where: {
-//         user_id: req.params.id
-//       },
-//       order: [
-//         ['date', 'DESC']
-//       ],
-//       include: [
-//         {
-//           model: Item,
-//           as: 'items'
-//         }
-//       ]
-//     })
-//     res.send(expenses);
-//   })
-// );
 
 /**
  * Get single Expense by id
@@ -72,6 +44,34 @@ router.get('/expense/:id', asyncMiddleWare(async(req, res) => {
     if (!expense) return res.status(400).send({ error: 'No expense found' });
 
     res.send(expense);
+  })
+);
+
+/**
+ * Get expenses by year
+ */
+router.get('/', asyncMiddleWare(async (req, res) => {
+    let year = req.query.year;
+    let user_id = req.query.userid;
+
+    const expenses = await Expense.findAll({
+      where: {
+        user_id
+      },
+      order: [
+        ['date', 'DESC']
+      ],
+      include: [{
+          model: Item,
+          as: 'items'
+      }]
+    });
+    let expensesByYear = expenses.filter((expense) => {
+      if (expense.date !== null) {
+          return expense.date.substring(0, 4) === year;
+      }
+    });
+    res.send(expensesByYear);
   })
 );
 

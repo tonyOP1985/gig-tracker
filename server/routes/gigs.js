@@ -1,6 +1,7 @@
 const express = require('express');
 const { Gig } = require('../models');
 const { validateGig } = require('../Validation/validation');
+const { reduceDates } = require('../utils/reduceGigs');
 const asyncMiddleWare = require('../middleware/async');
 
 const router = express.Router();
@@ -9,50 +10,20 @@ const router = express.Router();
 router.get('/', asyncMiddleWare(async(req, res) => {
     const year = req.query.year;
     const user_id = req.query.userid;
-    const state = req.query.state;
-
-    if (year && state && user_id) {
-      const gigs = await Gig.findAll({
-        where: {
-          state,
-          user_id
-        },
-        order: [
-          ['date', 'DESC']
-        ]
-      });
-      let gigsByYear = gigs.filter((gig) => {
-        if (gig.date !== null) {
+    const gigs = await Gig.findAll({
+      where: {
+        user_id
+      },
+      order: [
+        ['date', 'DESC']
+      ]
+    });
+    let gigsByYear = gigs.filter((gig) => {
+      if (gig.date !== null) {
           return gig.date.substring(0, 4) === year;
-        }
-      });
-      res.send(gigsByYear);
-    } else if (year && user_id) {
-      const gigs = await Gig.findAll({
-        where: {
-          user_id
-        },
-        order: [
-          ['date', 'DESC']
-        ]
-      });
-      let gigsByYear = gigs.filter((gig) => {
-        if (gig.date !== null) {
-          return gig.date.substring(0, 4) === year;
-        }
-      });
-      res.send(gigsByYear);
-    } else {
-      const gigs = await Gig.findAll({
-        where: {
-          user_id
-        },
-        order: [
-          ['date', 'DESC']
-        ]
-      });
-      res.send(gigs);
-    }
+      }
+    });
+    res.send(gigsByYear);
   })
 );
 

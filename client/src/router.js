@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Main from './views/Main.vue';
-import Gigs from './components/gigs/Gigs.vue';
-import EditScreen from './components/gigs/edit/EditScreen.vue';
-import NewScreen from './components/gigs/edit/NewScreen.vue';
+import Gigs from './components/tables/Gigs.vue';
+import EditScreen from './components/edit/EditScreen.vue';
+import NewScreen from './components/edit/NewScreen.vue';
 
 Vue.use(Router)
 

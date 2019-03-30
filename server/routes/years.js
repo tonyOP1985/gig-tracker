@@ -1,16 +1,9 @@
 const express = require('express');
 const { Gig, Expense } = require('../models');
+const { reduceDates } = require('../utils/reduceGigs');
 const asyncMiddleWare = require('../middleware/async');
 
 const router = express.Router();
-
-const reduceDates = (array) => {
-  let arr = array.map((item) => {
-    let year = item.date.substring(0, 4);
-    return year;
-  });
-  return [...new Set(arr)];
-};
 
 // get years of gigs
 router.get('/:userid', asyncMiddleWare(async(req, res) => {
