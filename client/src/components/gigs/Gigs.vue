@@ -140,7 +140,7 @@ import 'jspdf-autotable';
 import store from '@/store';
 import { mapGetters } from 'vuex';
 import { windowWidth } from '../../mixins/windowWidth.js';
-
+// another test for git LOL
 import PDFConfig from './PDFConfig';
 
 export default {
