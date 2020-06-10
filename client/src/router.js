@@ -28,16 +28,16 @@ export default new Router({
           name: 'gigs',
           component: Gigs
         },
-        {
-          path: '/gig/edit/:id',
-          name: 'editGig',
-          component: EditScreen
-        },
-        {
-          path: '/gig/new',
-          name: 'addGig',
-          component: NewScreen
-        }
+        // {
+        //   path: '/gig/edit/:id',
+        //   name: 'editGig',
+        //   component: EditScreen
+        // },
+        // {
+        //   path: '/gig/new',
+        //   name: 'addGig',
+        //   component: NewScreen
+        // }
       ]
     }
   ]

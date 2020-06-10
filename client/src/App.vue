@@ -1,5 +1,5 @@
 <template>
-  <v-app class="white">
+  <v-app>
     <notifications group="default"
                    class="notify"
                    position="bottom right"
