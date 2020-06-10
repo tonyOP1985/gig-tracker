@@ -1,9 +1,11 @@
 <template>
-  <v-toolbar app 
-             dark 
-             color="blue"
-             class="elevation-0">
-    <v-toolbar-side-icon @click="drawer = !drawer" class="hamburger"></v-toolbar-side-icon>
+  <v-app-bar
+    app
+    dark 
+    color="blue"
+    class="elevation-0"
+  >
+    <v-app-bar-nav-icon @click="drawer = !drawer"/>
     <router-link to="/">
       <v-toolbar-title class="font-weight-bold white--text">Gig Tracker</v-toolbar-title>
     </router-link>
@@ -11,17 +13,17 @@
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn v-for="(item, index) in toolbarItems"
              :key="index"
-             flat
+             text
              :to="item.link">
         {{ item.name }}
       </v-btn>
-      <v-btn flat
+      <v-btn text
              to="/login"
              @click="logout">
         Logout
       </v-btn>
     </v-toolbar-items>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>

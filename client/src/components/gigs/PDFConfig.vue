@@ -1,40 +1,42 @@
 <template>
   <v-card>
-    <v-toolbar dark color="blue">
-      <v-toolbar-title>Create PDF</v-toolbar-title>
-      <v-spacer></v-spacer>
+    <v-card-title class="blue white--text elevation-0">
+      Create PDF
+      <v-spacer />
       <v-btn icon dark @click="close">
         <v-icon>close</v-icon>
       </v-btn>
-    </v-toolbar>
-    <v-card-text>
-      <v-form @submit.prevent="createPDF">
-        <v-layout row wrap justify-center>
-          <v-flex xs12 sm4 class="mr-1">
-            <v-combobox v-model="year"
-                        :items="years"
-                        label="Select Year">
-            </v-combobox>
-          </v-flex>
-          <v-flex xs12 sm4 class="ml-1">
-            <v-combobox v-model="state"
-                        :items="states"
-                        label="Select State">
-            </v-combobox>
-          </v-flex>
-        </v-layout>
-        <v-layout justify-center>
-          <v-flex xs4>
-            <v-btn block
-                   type="submit"
-                   color="primary"
-                   @click="createPDF">
-              Export PDF
-            </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-form>
-    </v-card-text>
+    </v-card-title>
+    <v-form @submit.prevent="createPDF">
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-select 
+              v-model="year"
+              :items="years"
+              label="Select Year"
+            />
+          </v-col>
+          <v-col>
+            <v-select 
+              v-model="state"
+              :items="states"
+              label="Select State"
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn 
+          block
+          type="submit"
+          color="primary"
+          @click="createPDF"
+        >
+          Export PDF
+        </v-btn>
+      </v-card-actions>
+    </v-form>
   </v-card>
 </template>
 
