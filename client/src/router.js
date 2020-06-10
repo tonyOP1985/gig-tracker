@@ -33,11 +33,11 @@ export default new Router({
         //   name: 'editGig',
         //   component: EditScreen
         // },
-        // {
-        //   path: '/gig/new',
-        //   name: 'addGig',
-        //   component: NewScreen
-        // }
+        {
+          path: '/gig/new',
+          name: 'addGig',
+          component: NewScreen
+        }
       ]
     }
   ]

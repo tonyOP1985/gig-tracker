@@ -1,64 +1,88 @@
 <template>
   <v-form @submit.prevent="saveGig(gig)">
-    <v-container>
-      <v-layout justify-center>
-        <v-flex xs12 sm8 md8>
-          <v-card flat>
-            <v-card-title>
-              <h3 color="blue">Edit Gig</h3>
-            </v-card-title>
-            <v-container grid-list-md>
-              <v-layout row wrap>
-                <v-flex sm6 xs12>
-                  <TextField label="Date" 
-                             v-model="gig.date"
-                             name="date"></TextField>
-                </v-flex>
-                <v-flex sm6 xs12>
-                  <TextField label="Pay" 
-                             v-model="gig.pay" 
-                             name="pay"></TextField>
-                </v-flex>
-                <v-flex sm4 xs6>
-                  <TextField label="City" 
-                             v-model="gig.city" 
-                             name="city"></TextField>
-                </v-flex>
-                <v-flex sm4 xs6>
-                  <TextField label="State" 
-                             v-model="gig.state" 
-                             name="state"></TextField>
-                </v-flex>
-                <v-flex sm4 xs12>
-                  <TextField label="Mileage" 
-                             v-model="gig.mileage" 
-                             name="mileage"></TextField>
-                </v-flex>
-                <v-flex sm6 xs12>
-                  <TextField label="Band" 
-                             v-model="gig.band" 
-                             name="band"></TextField>
-                </v-flex>
-                <v-flex sm6 xs12>
-                  <TextField label="Venue" 
-                             v-model="gig.venue" 
-                             name="venue"></TextField>
-                </v-flex>
-                <v-flex xs12>
-                  <v-btn type="submit"
-                         color="primary" 
-                         block>Save</v-btn>
-                </v-flex>
-                <v-flex xs12>
-                  <v-btn @click="cancel()"
-                         color="error" 
-                         block>Cancel</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
-        </v-flex>
-      </v-layout>
+    <v-container class="mt-6">
+      <v-card flat outlined>
+        <v-card-title class="primary white--text">{{ title }}</v-card-title>
+        <v-card-text>
+          <v-row class="mx-4">
+            <v-col cols="12" md="6">
+              <v-menu
+                v-model="dateMenu"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="gig.date"
+                    label="Date"
+                    prepend-inner-icon="event"
+                    v-bind="attrs"
+                    readonly
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker v-model="gig.date" @input="dateMenu = false" />
+              </v-menu>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                v-model="gig.pay"
+                prefix="$"
+                label="Pay" 
+              />
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="gig.city"
+                label="City" 
+              />
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="gig.state"
+                label="State" 
+              />
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="gig.mileage"
+                label="Mileage" 
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                v-model="gig.band"
+                label="Band" 
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                v-model="gig.venue"
+                label="Venue" 
+              />
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions class="grey lighten-4">
+          <v-spacer />
+            <v-btn  
+              @click="cancel()"
+              color="error" 
+              text
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              type="submit"
+              color="primary" 
+            >
+              Save
+            </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-container>
   </v-form>
 </template>
@@ -71,7 +95,12 @@ export default {
     TextField
   },
 
-  props: ['model'],
+  props: {
+    model: {
+      type: Object,
+      default: null,
+    },
+  },
 
   data() {
     return {
@@ -83,13 +112,19 @@ export default {
         mileage: '',
         band: '',
         venue: ''
-      }
+      },
+      dateMenu: false,
     }
+  },
+
+  computed: {
+    title() {
+      return this.model ? 'Edit Gig' : 'New Gig';
+    },
   },
 
   methods: {
     saveGig(gig) {
-      // debugger;
       this.$emit('save-gig', gig);
     },
 
