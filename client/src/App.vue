@@ -1,11 +1,13 @@
 <template>
   <v-app>
-    <notifications group="default"
-                   class="notify"
-                   position="bottom right"
-                   :duration="5000"
-                   :max="1"/>
-    <router-view></router-view>
+    <notifications
+      group="default"
+      class="notify"
+      position="bottom right"
+      :duration="5000"
+      :max="1"
+    />
+    <router-view />
   </v-app>
 </template>
 

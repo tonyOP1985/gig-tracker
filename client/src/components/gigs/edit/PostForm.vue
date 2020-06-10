@@ -88,13 +88,7 @@
 </template>
 
 <script>
-import TextField from '../../common/TextField';
-
 export default {
-  components: {
-    TextField
-  },
-
   props: {
     model: {
       type: Object,
