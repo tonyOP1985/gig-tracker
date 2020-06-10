@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="px-0">
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" width="400">
       <PDFConfig @close-dialog="dialog = false" @create-pdf="exportPDF" />
     </v-dialog>
     <v-card-title>
